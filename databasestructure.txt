@@ -1,0 +1,17 @@
+DataBase structure:
+
+Table 1: Items
+	id
+	name
+	UPC
+
+Table 2: List
+	id
+	name
+	item id
+
+Table 3: Inventory
+	id
+	name
+	item id
+	catagory
