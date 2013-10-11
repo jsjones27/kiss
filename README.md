@@ -1,4 +1,4 @@
-Kitchen Inventory Supply Service
+Kitchen Inventory Supply System
 ==========================
 
 Aishwarya Venkatakrishnan
