@@ -4,16 +4,12 @@ Table 1: Items
 	id
 	name
 	UPC
+	category
 
 Table 2: List
-	id
-	name
 	item id
 	quantity
 
 Table 3: Inventory
-	id
-	name
 	item id
-	catagory
 	quantity
