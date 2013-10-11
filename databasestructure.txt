@@ -3,8 +3,8 @@ DataBase structure:
 Table 1: Items
 	id
 	name
-	UPC
 	category
+
 
 Table 2: List
 	item id
