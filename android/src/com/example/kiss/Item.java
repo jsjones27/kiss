@@ -1,6 +1,7 @@
 package com.example.kiss;
 
 public class Item {
+	public static final int NO_ID = -1;
 	private int id;
 	private String name;
 	private String category;
@@ -13,9 +14,13 @@ public class Item {
 		this.category = category;
 	}
 	
-	public Item() {
-		// TODO Auto-generated constructor stub
+	public Item(String name, String category) {
+		this.id = NO_ID;
+		this.name = name;
+		this.category = category;
 	}
+	
+	public Item() {}
 
 	public int getId() {
 		return id;
