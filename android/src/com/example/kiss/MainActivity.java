@@ -2,7 +2,9 @@ package com.example.kiss;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
+import android.view.View;
 
 public class MainActivity extends Activity {
 
@@ -19,8 +21,14 @@ public class MainActivity extends Activity {
 		return true;
 	}
 	
-	public void jumpToInventory(){
-		return;
+	public void jumpToInventory(View veiw){
+		Intent intent = new Intent(this, InverntoryActivity.class);
+		startActivity(intent);
+	}
+	
+	public void jumpToGrocery(View veiw){
+		Intent intent = new Intent(this, GroceryActivity.class);
+		startActivity(intent);
 	}
 
 }
