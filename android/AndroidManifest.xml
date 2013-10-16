@@ -30,6 +30,11 @@
             android:name="com.example.kiss.GroceryActivity"
             android:label="@string/title_activity_grocery" >
         </activity>
+        <activity
+            android:name="com.example.kiss.AddItemActivity"
+            android:label="@string/title_activity_add_item"
+            android:windowSoftInputMode="adjustResize|stateVisible" >
+        </activity>
     </application>
 
 </manifest>
