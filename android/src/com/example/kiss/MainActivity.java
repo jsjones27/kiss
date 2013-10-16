@@ -22,7 +22,7 @@ public class MainActivity extends Activity {
 	}
 	
 	public void jumpToInventory(View veiw){
-		Intent intent = new Intent(this, InverntoryActivity.class);
+		Intent intent = new Intent(this, InventoryActivity.class);
 		startActivity(intent);
 	}
 	
