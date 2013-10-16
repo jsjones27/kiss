@@ -35,7 +35,7 @@ public class InverntoryActivity extends Activity {
 		item.setQuantity(Double.valueOf(qnt.getText().toString()));
 		item.setCatagory(catagory.getText().toString());
 		
-		Toast.makeText(getApplicationContext(), "DONE", Toast.LENGTH_LONG).show();
+		Toast.makeText(getApplicationContext(), "Recieved " + item.getName(), Toast.LENGTH_LONG).show();
 	}
 
 }
