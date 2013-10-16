@@ -21,12 +21,12 @@ public class MainActivity extends Activity {
 		return true;
 	}
 	
-	public void jumpToInventory(View veiw){
+	public void jumpToInventory(View view){
 		Intent intent = new Intent(this, InventoryActivity.class);
 		startActivity(intent);
 	}
 	
-	public void jumpToGrocery(View veiw){
+	public void jumpToGrocery(View view){
 		Intent intent = new Intent(this, GroceryActivity.class);
 		startActivity(intent);
 	}
