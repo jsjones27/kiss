@@ -1,5 +1,8 @@
 package com.example.kiss;
 
+import java.util.Vector;
+
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.ContentValues;
@@ -11,7 +14,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final String DATABASE_NAME = "KissDB";
 	private static final String TABLE_ITEM = "item";
 	private static final String TABLE_INVENTORY = "inventory";
-	private static final String TABLE_LIST = "list";
+	private static final String TABLE_GROCERY = "grocery";
 	private static final String KEY_ID = "id";
 	private static final String KEY_ITEM_ID = "item_id";
 	private static final String KEY_NAME = "name";
@@ -24,26 +27,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		String CREATE_ITEM_TABLE = "CREATE IF NOT EXISTS TABLE " + TABLE_ITEM + " ( " +
+		String createItemTableQuery = "CREATE IF NOT EXISTS TABLE " + TABLE_ITEM + " ( " +
 				KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				KEY_NAME + " TEXT, " +
 				KEY_CATEGORY + " TEXT )";
-		String CREATE_INVENTORY_TABLE = "CREATE IF NOT EXISTS TABLE " + TABLE_INVENTORY + " ( " +
+		String createInventoryTableQuery = "CREATE IF NOT EXISTS TABLE " + TABLE_INVENTORY + " ( " +
 				KEY_ITEM_ID + " INTEGER, " +
-				KEY_QUANTITY + " TEXT )";
-		String CREATE_LIST_TABLE = "CREATE IF NOT EXISTS TABLE " + TABLE_LIST + " ( " +
+				KEY_QUANTITY + " REAL )";
+		String createGroceryTableQuery = "CREATE IF NOT EXISTS TABLE " + TABLE_GROCERY + " ( " +
 				KEY_ITEM_ID + " INTEGER, " +
-				KEY_QUANTITY + " TEXT )";
-		db.execSQL(CREATE_ITEM_TABLE);
-		db.execSQL(CREATE_INVENTORY_TABLE);
-		db.execSQL(CREATE_LIST_TABLE);
+				KEY_QUANTITY + " REAL )";
+		db.execSQL(createItemTableQuery);
+		db.execSQL(createInventoryTableQuery);
+		db.execSQL(createGroceryTableQuery);
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_ITEM);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_INVENTORY);
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_LIST);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_GROCERY);
 		this.onCreate(db);
 	}
 	
@@ -57,29 +60,75 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.insert(TABLE_ITEM, null, values);
 	}
 	
-	public void addItemToInventory(Item item, int quantity) {
-		addItemToTable(TABLE_INVENTORY, item, quantity);
+	public void addItemToInventory(ListItem item) {
+		addItemToTable(TABLE_INVENTORY, item);
 	}
 	
-	public void addItemToList(Item item, int quantity) {
-		addItemToTable(TABLE_LIST, item, quantity);
+	public void addItemToGrocery(ListItem item) {
+		addItemToTable(TABLE_GROCERY, item);
 	}
 	
-	private void addItemToTable(String table_name, Item item, int quantity) {
-		/*if (table_name != TABLE_INVENTORY && table_name != TABLE_LIST) {
+	private void addItemToTable(String table_name, ListItem listItem) {
+		/*if (table_name != TABLE_INVENTORY && table_name != TABLE_GROCERY) {
 			throw new Exception("Invalid table name");
 		}*/
 		
 		SQLiteDatabase db = this.getWritableDatabase();
 		
-		if (item.getId() == Item.NO_ID) {
-			addItem(item);
+		if (listItem.getItem().getId() == Item.NO_ID) {
+			addItem(listItem.getItem());
 		}
 		
 		ContentValues values = new ContentValues();
-		values.put(KEY_ITEM_ID, item.getId());
-		values.put(KEY_QUANTITY, quantity);	
+		values.put(KEY_ITEM_ID, listItem.getItem().getId());
+		values.put(KEY_QUANTITY, listItem.getQuantity());	
 		
 		db.insert(table_name, null, values);
+	}
+	
+	public Item getItem(int itemId) {
+		SQLiteDatabase db = this.getReadableDatabase();
+		
+		String query = "SELECT * FROM " + TABLE_ITEM + " WHERE " + KEY_ID + " = " + itemId;
+		Cursor cursor = db.rawQuery(query, null);
+		
+		if (cursor != null) {
+	        cursor.moveToFirst();
+		}
+		
+		Item item = new Item();
+		item.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+		item.setName(cursor.getString(cursor.getColumnIndex(KEY_NAME)));
+		item.setCategory(cursor.getString(cursor.getColumnIndex(KEY_CATEGORY)));
+		
+		return item;
+	}
+	
+	public Vector<ListItem> getGrocery() {
+		return getList(TABLE_GROCERY);
+	}
+	
+	public Vector<ListItem> getInventory() {
+		return getList(TABLE_INVENTORY);
+	}
+	
+	private Vector<ListItem> getList(String table_name) {
+		Vector<ListItem> list = new Vector<ListItem>();
+		SQLiteDatabase db = this.getReadableDatabase();
+		
+		String query = "SELECT * FROM " + table_name;
+		Cursor cursor = db.rawQuery(query, null);
+		
+		if (cursor.moveToFirst()) {
+			do {
+				ListItem listItem = new ListItem();
+				listItem.setItem(getItem(cursor.getInt(cursor.getColumnIndex(KEY_ID))));
+				listItem.setQuantity(cursor.getDouble(cursor.getColumnIndex(KEY_QUANTITY)));
+				
+				list.add(listItem);
+			} while (cursor.moveToNext());
+		}
+		
+		return list;
 	}
 }
