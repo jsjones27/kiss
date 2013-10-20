@@ -27,12 +27,12 @@ public class GroceryActivity extends Activity {
 	public void addItemToInventory(View view){
 		EditText name = (EditText)findViewById(R.id.editText1);
 		EditText qnt = (EditText)findViewById(R.id.editText2);
-		AutoCompleteTextView catagory = (AutoCompleteTextView)findViewById(R.id.autoCompleteTextView1);
+		AutoCompleteTextView category = (AutoCompleteTextView)findViewById(R.id.autoCompleteTextView1);
 		
 		Item item = new Item();
 		item.setName(name.getText().toString());
 		item.setQuantity(Double.valueOf(qnt.getText().toString()));
-		item.setCatagory(catagory.getText().toString());
+		item.setCategory(category.getText().toString());
 		
 		Toast.makeText(getApplicationContext(), "Recieved " + item.getName(), Toast.LENGTH_LONG).show();
 	}
