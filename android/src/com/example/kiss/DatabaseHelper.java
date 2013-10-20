@@ -68,7 +68,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		addItemToTable(TABLE_GROCERY, item);
 	}
 	
-	private void addItemToTable(String table_name, ListItem listItem) {
+	private void addItemToTable(String tableName, ListItem listItem) {
 		/*if (table_name != TABLE_INVENTORY && table_name != TABLE_GROCERY) {
 			throw new Exception("Invalid table name");
 		}*/
@@ -83,7 +83,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		values.put(KEY_ITEM_ID, listItem.getItem().getId());
 		values.put(KEY_QUANTITY, listItem.getQuantity());	
 		
-		db.insert(table_name, null, values);
+		db.insert(tableName, null, values);
 	}
 	
 	public Item getItem(int itemId) {
@@ -112,17 +112,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return getList(TABLE_INVENTORY);
 	}
 	
-	private Vector<ListItem> getList(String table_name) {
+	private Vector<ListItem> getList(String tableName) {
 		Vector<ListItem> list = new Vector<ListItem>();
 		SQLiteDatabase db = this.getReadableDatabase();
 		
-		String query = "SELECT * FROM " + table_name;
+		String query = "SELECT * FROM " + tableName;
 		Cursor cursor = db.rawQuery(query, null);
 		
 		if (cursor.moveToFirst()) {
 			do {
 				ListItem listItem = new ListItem();
-				listItem.setItem(getItem(cursor.getInt(cursor.getColumnIndex(KEY_ID))));
+				listItem.setItem(getItem(cursor.getInt(cursor.getColumnIndex(KEY_ITEM_ID))));
 				listItem.setQuantity(cursor.getDouble(cursor.getColumnIndex(KEY_QUANTITY)));
 				
 				list.add(listItem);
@@ -130,5 +130,45 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		}
 		
 		return list;
+	}
+	
+	public int updateItem(Item item) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		
+		ContentValues values = new ContentValues();
+		values.put(KEY_NAME, item.getName());
+		values.put(KEY_CATEGORY, item.getCategory());
+		
+		return db.update(TABLE_ITEM, values, KEY_ID + " = ?", new String[] { String.valueOf(item.getId()) });
+	}
+	
+	public int updateGroceryItem(ListItem listItem) {
+		return updateListItem(TABLE_GROCERY, listItem);
+	}
+	
+	public int updateInventoryItem(ListItem listItem) {
+		return updateListItem(TABLE_INVENTORY, listItem);
+	}
+	
+	private int updateListItem(String tableName, ListItem listItem) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		
+		ContentValues values = new ContentValues();
+		values.put(KEY_QUANTITY, listItem.getQuantity());
+		
+		return db.update(tableName, values, KEY_ITEM_ID + " = ?", new String[] { String.valueOf(listItem.getItem().getId()) });
+	}
+	
+	public void deleteGroceryItem(ListItem listItem) {
+		deleteListItem(TABLE_GROCERY, listItem);
+	}
+	
+	public void deleteInventoryItem(ListItem listItem) {
+		deleteListItem(TABLE_INVENTORY, listItem);
+	}
+	
+	private void deleteListItem(String tableName, ListItem listItem) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		db.delete(tableName, KEY_ITEM_ID + " = ?", new String[] {String.valueOf(listItem.getItem().getId()) });
 	}
 }
