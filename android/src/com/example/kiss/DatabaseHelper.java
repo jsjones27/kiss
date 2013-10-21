@@ -27,14 +27,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		String createItemTableQuery = "CREATE IF NOT EXISTS TABLE " + TABLE_ITEM + " ( " +
+		String createItemTableQuery = "CREATE TABLE IF NOT EXISTS " + TABLE_ITEM + " ( " +
 				KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				KEY_NAME + " TEXT, " +
 				KEY_CATEGORY + " TEXT )";
-		String createInventoryTableQuery = "CREATE IF NOT EXISTS TABLE " + TABLE_INVENTORY + " ( " +
+		String createInventoryTableQuery = "CREATE TABLE IF NOT EXISTS " + TABLE_INVENTORY + " ( " +
 				KEY_ITEM_ID + " INTEGER, " +
 				KEY_QUANTITY + " REAL )";
-		String createGroceryTableQuery = "CREATE IF NOT EXISTS TABLE " + TABLE_GROCERY + " ( " +
+		String createGroceryTableQuery = "CREATE TABLE IF NOT EXISTS " + TABLE_GROCERY + " ( " +
 				KEY_ITEM_ID + " INTEGER, " +
 				KEY_QUANTITY + " REAL )";
 		db.execSQL(createItemTableQuery);
@@ -50,25 +50,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		this.onCreate(db);
 	}
 	
-	public void addItem(Item item) {
+	public void resetDatabase() {
+		SQLiteDatabase db = this.getWritableDatabase();
+		
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_ITEM);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_INVENTORY);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_GROCERY);
+		this.onCreate(db);
+	}
+	
+	public void closeDB() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        if (db != null && db.isOpen())
+            db.close();
+    }
+	
+	public int addItem(Item item) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		
 		ContentValues values = new ContentValues();
 		values.put(KEY_NAME, item.getName());
 		values.put(KEY_CATEGORY, item.getCategory());
 		
-		db.insert(TABLE_ITEM, null, values);
+		return (int) db.insert(TABLE_ITEM, null, values);
 	}
 	
-	public void addItemToInventory(ListItem item) {
-		addItemToTable(TABLE_INVENTORY, item);
+	public void addInventoryItem(ListItem item) {
+		addTableItem(TABLE_INVENTORY, item);
 	}
 	
-	public void addItemToGrocery(ListItem item) {
-		addItemToTable(TABLE_GROCERY, item);
+	public void addGroceryItem(ListItem item) {
+		addTableItem(TABLE_GROCERY, item);
 	}
 	
-	private void addItemToTable(String tableName, ListItem listItem) {
+	private void addTableItem(String tableName, ListItem listItem) {
 		/*if (table_name != TABLE_INVENTORY && table_name != TABLE_GROCERY) {
 			throw new Exception("Invalid table name");
 		}*/
@@ -76,7 +91,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getWritableDatabase();
 		
 		if (listItem.getItem().getId() == Item.NO_ID) {
-			addItem(listItem.getItem());
+			listItem.getItem().setId(addItem(listItem.getItem()));
 		}
 		
 		ContentValues values = new ContentValues();
