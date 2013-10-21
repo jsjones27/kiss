@@ -23,13 +23,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.kiss.InventoryActivity"
+            android:name=".InventoryActivity"
             android:label="@string/title_activity_inverntory" >
         </activity>
         <activity
-            android:name="com.example.kiss.GroceryActivity"
+            android:name=".GroceryActivity"
             android:label="@string/title_activity_grocery" >
         </activity>
+<<<<<<< Updated upstream
+=======
+        <activity
+            android:name=".AddItemActivity"
+            android:label="@string/title_activity_add_item"
+            android:windowSoftInputMode="adjustResize|stateVisible" >
+        </activity>
+>>>>>>> Stashed changes
     </application>
 
 </manifest>
