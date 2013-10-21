@@ -37,6 +37,9 @@ public class InventoryActivity extends Activity {
 		listItem.setItem(item);
 		listItem.setQuantity(Double.valueOf(qnt.getText().toString()));
 		
+		DatabaseHelper db = new DatabaseHelper(this);
+		db.addInventoryItem(listItem);
+		
 		Toast.makeText(getApplicationContext(), "Recieved " + listItem.getItem().getName(), Toast.LENGTH_LONG).show();
 	}
 
