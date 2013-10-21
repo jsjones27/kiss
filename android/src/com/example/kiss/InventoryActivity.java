@@ -14,6 +14,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class InventoryActivity extends Activity {
 
 	ListView listView;
@@ -33,7 +36,23 @@ public class InventoryActivity extends Activity {
                                          "Donuts",
                                          "Eggs"
                                          };
-
+        
+        
+        System.out.println("Making db helper...");
+        DatabaseHelper db = new DatabaseHelper(this);
+        System.out.println("Getting inventory...");
+        List<ListItem> listItems = db.getInventory();
+        System.out.println("Got inventory.");
+//        System.out.println("Create empty string list");
+//        List<String> values = new ArrayList<String>();
+//        System.out.println("Begin adding to string list...");
+//        for (ListItem li : listItems) {
+//        	System.out.println("Add this: " + li.getItem().getName());
+//        	values.add(li.getItem().getName());
+//        }
+//        System.out.println("done");
+        
+        
         // Define a new Adapter
         // First parameter - Context
         // Second parameter - Layout for the row
