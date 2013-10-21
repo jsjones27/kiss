@@ -14,8 +14,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-	  
-=======
 public class InventoryActivity extends Activity {
 
 	ListView listView;
@@ -101,4 +99,5 @@ public class InventoryActivity extends Activity {
 	    }
   
 	
+	}
 }
