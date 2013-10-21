@@ -14,9 +14,11 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class InverntoryActivity extends Activity {
-	
-	  ListView listView ;
+	  
+=======
+public class InventoryActivity extends Activity {
+
+	ListView listView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +99,6 @@ public class InverntoryActivity extends Activity {
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
-	}
   
 	
 }
