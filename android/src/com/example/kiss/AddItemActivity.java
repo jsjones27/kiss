@@ -89,6 +89,7 @@ public class AddItemActivity extends Activity {
 		
 		DatabaseHelper db = new DatabaseHelper(this);
 		db.addInventoryItem(listItem);
+		db.close();
 		
 		Toast.makeText(getApplicationContext(), "Recieved " + item.getName(), Toast.LENGTH_LONG).show();
 	}

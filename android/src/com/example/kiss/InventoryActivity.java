@@ -51,6 +51,7 @@ public class InventoryActivity extends Activity {
         	values.add(li.getItem().getName());
         }
         System.out.println("done");
+        db.close()
         
         
         // Define a new Adapter
