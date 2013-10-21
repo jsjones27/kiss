@@ -27,15 +27,12 @@ public class InverntoryActivity extends Activity {
         listView = (ListView) findViewById(R.id.list);
         
         // Defined Array values to show in ListView
-        String[] values = new String[] { "Android List View", 
-                                         "Adapter implementation",
-                                         "Simple List View In Android",
-                                         "Create List View Android", 
-                                         "Android Example", 
-                                         "List View Source Code", 
-                                         "List View Array Adapter", 
-                                         "Android Example List View" 
-                                        };
+        String[] values = new String[] { "Apples", 
+                                         "Bannas",
+                                         "Carrots",
+                                         "Donuts",
+                                         "Eggs"
+                                         };
 
         // Define a new Adapter
         // First parameter - Context
