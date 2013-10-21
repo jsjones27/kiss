@@ -30,14 +30,6 @@
             android:name=".GroceryActivity"
             android:label="@string/title_activity_grocery" >
         </activity>
-<<<<<<< Updated upstream
-=======
-        <activity
-            android:name=".AddItemActivity"
-            android:label="@string/title_activity_add_item"
-            android:windowSoftInputMode="adjustResize|stateVisible" >
-        </activity>
->>>>>>> Stashed changes
     </application>
 
 </manifest>
