@@ -81,28 +81,26 @@ public class AddItemActivity extends Activity {
 	public void addItemToInventory() {
 		Item item = new Item();
 		item.setName(mNameView.getText().toString());
-		//item.setQuantity(Double.valueOf(mQuantityView.getText().toString()));
 		item.setCategory(mCategoryView.getText().toString());
+		
+		ListItem listItem = new ListItem();
+		listItem.setItem(item);
+		listItem.setQuantity(Double.valueOf(mQuantityView.getText().toString()));
+		
+		DatabaseHelper db = new DatabaseHelper(this);
+		db.addInventoryItem(listItem);
 		
 		Toast.makeText(getApplicationContext(), "Recieved " + item.getName(), Toast.LENGTH_LONG).show();
 	}
 	
 	/* Old code from InventoryActivity.java */
-	public void addItemToInventory(View view){
-		EditText name = (EditText)findViewById(R.id.editText1);
-		EditText qnt = (EditText)findViewById(R.id.editText2);
-		AutoCompleteTextView category = (AutoCompleteTextView)findViewById(R.id.autoCompleteTextView1);
-		
-		Item item = new Item();
-		item.setName(name.getText().toString());
-		item.setCategory(category.getText().toString());
-		ListItem listItem = new ListItem();
-		listItem.setItem(item);
-		listItem.setQuantity(Double.valueOf(qnt.getText().toString()));
-		
-		DatabaseHelper db = new DatabaseHelper(this);
-		db.addInventoryItem(listItem);
-		
-		Toast.makeText(getApplicationContext(), "Recieved " + listItem.getItem().getName(), Toast.LENGTH_LONG).show();
-	}
+//	public void addItemToInventory(View view){
+//		EditText name = (EditText)findViewById(R.id.editText1);
+//		EditText qnt = (EditText)findViewById(R.id.editText2);
+//		AutoCompleteTextView category = (AutoCompleteTextView)findViewById(R.id.autoCompleteTextView1);
+//		
+//		
+//		
+//		Toast.makeText(getApplicationContext(), "Recieved " + listItem.getItem().getName(), Toast.LENGTH_LONG).show();
+//	}
 }
