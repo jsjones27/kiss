@@ -57,7 +57,7 @@
                 android:singleLine="true" />
 
             <EditText
-                android:id="@+id/quantaty"
+                android:id="@+id/quantity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_quantity"

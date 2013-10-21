@@ -43,7 +43,7 @@ public class AddItemActivity extends Activity {
 
 		mCategoryView = (EditText) findViewById(R.id.category);
 		
-		mQuantityView = (EditText) findViewById(R.id.quantaty);
+		mQuantityView = (EditText) findViewById(R.id.quantity);
 		
 	/*	mCategoryView
 				.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -87,16 +87,4 @@ public class AddItemActivity extends Activity {
 		Toast.makeText(getApplicationContext(), "Recieved " + item.getName(), Toast.LENGTH_LONG).show();
 	}
 	
-	public void addItemToInventory(View view){
-		EditText name = (EditText)findViewById(R.id.editText1);
-		EditText qnt = (EditText)findViewById(R.id.editText2);
-		AutoCompleteTextView catagory = (AutoCompleteTextView)findViewById(R.id.autoCompleteTextView1);
-		
-		Item item = new Item();
-		item.setName(name.getText().toString());
-		item.setQuantity(Double.valueOf(qnt.getText().toString()));
-		item.setCatagory(catagory.getText().toString());
-		
-		Toast.makeText(getApplicationContext(), "Recieved " + item.getName(), Toast.LENGTH_LONG).show();
-	}
 }

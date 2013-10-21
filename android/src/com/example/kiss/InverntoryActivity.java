@@ -6,17 +6,77 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 public class InverntoryActivity extends Activity {
+	
+	  ListView listView ;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		Intent intent = getIntent();
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_inverntory);
+		/*
+		// Get ListView object from xml
+        listView = (ListView) findViewById(R.id.list);
+        
+        // Defined Array values to show in ListView
+        String[] values = new String[] { "Android List View", 
+                                         "Adapter implementation",
+                                         "Simple List View In Android",
+                                         "Create List View Android", 
+                                         "Android Example", 
+                                         "List View Source Code", 
+                                         "List View Array Adapter", 
+                                         "Android Example List View" 
+                                        };
+
+        // Define a new Adapter
+        // First parameter - Context
+        // Second parameter - Layout for the row
+        // Third parameter - ID of the TextView to which the data is written
+        // Forth - the Array of data
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+          android.R.layout.simple_list_item_1, android.R.id.text1, values);
+
+
+        // Assign adapter to ListView
+        listView.setAdapter(adapter); 
+        
+        // ListView Item Click Listener
+        listView.setOnClickListener(new OnClickListener() {
+
+              public void onItemClick(AdapterView<?> parent, View view,
+                 int position, long id) {
+                
+               // ListView Clicked item index
+               int itemPosition     = position;
+               
+               // ListView Clicked item value
+               String  itemValue    = (String) listView.getItemAtPosition(position);
+                  
+                // Show Alert 
+                Toast.makeText(getApplicationContext(),
+                  "Position :"+itemPosition+"  ListItem : " +itemValue , Toast.LENGTH_LONG)
+                  .show();
+             
+              }
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+         }); 
+         */
 	}
 
 	@Override
@@ -41,18 +101,6 @@ public class InverntoryActivity extends Activity {
 	            return super.onOptionsItemSelected(item);
 	    }
 	}
+  
 	
-	public void addItemToInventory(View view){
-		EditText name = (EditText)findViewById(R.id.editText1);
-		EditText qnt = (EditText)findViewById(R.id.editText2);
-		AutoCompleteTextView catagory = (AutoCompleteTextView)findViewById(R.id.autoCompleteTextView1);
-		
-		Item item = new Item();
-		item.setName(name.getText().toString());
-		item.setQuantity(Double.valueOf(qnt.getText().toString()));
-		item.setCatagory(catagory.getText().toString());
-		
-		Toast.makeText(getApplicationContext(), "Recieved " + item.getName(), Toast.LENGTH_LONG).show();
-	}
-
 }
