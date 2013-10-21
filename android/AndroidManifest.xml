@@ -23,11 +23,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.kiss.InventoryActivity"
+            android:name=".InventoryActivity"
             android:label="@string/title_activity_inverntory" >
         </activity>
         <activity
-            android:name="com.example.kiss.GroceryActivity"
+            android:name=".GroceryActivity"
             android:label="@string/title_activity_grocery" >
         </activity>
         <activity
