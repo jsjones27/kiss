@@ -84,7 +84,7 @@ public class AddItemActivity extends Activity {
 		//item.setQuantity(Double.valueOf(mQuantityView.getText().toString()));
 		item.setCategory(mCategoryView.getText().toString());
 		
-		Toast.makeText(getApplicationContext(), "Recieved " + item.getName(), Toast.LENGTH_LONG).show();
+		Toast.makeText(getApplicationContext(), "Received " + item.getName(), Toast.LENGTH_LONG).show();
 	}
 	
 }
