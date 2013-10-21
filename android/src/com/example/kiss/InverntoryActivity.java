@@ -22,7 +22,7 @@ public class InverntoryActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_inverntory);
-		/*
+		
 		// Get ListView object from xml
         listView = (ListView) findViewById(R.id.list);
         
@@ -45,11 +45,11 @@ public class InverntoryActivity extends Activity {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
           android.R.layout.simple_list_item_1, android.R.id.text1, values);
-
+       
 
         // Assign adapter to ListView
         listView.setAdapter(adapter); 
-        
+        /* 
         // ListView Item Click Listener
         listView.setOnClickListener(new OnClickListener() {
 
