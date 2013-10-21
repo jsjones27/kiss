@@ -30,12 +30,12 @@ public class InventoryActivity extends Activity {
         listView = (ListView) findViewById(R.id.list);
         
         // Defined Array values to show in ListView
-        String[] values = new String[] { "Apples", 
-                                         "Bannas",
-                                         "Carrots",
-                                         "Donuts",
-                                         "Eggs"
-                                         };
+//        String[] values = new String[] { "Apples", 
+//                                         "Bannas",
+//                                         "Carrots",
+//                                         "Donuts",
+//                                         "Eggs"
+//                                         };
         
         
         System.out.println("Making db helper...");
@@ -43,14 +43,14 @@ public class InventoryActivity extends Activity {
         System.out.println("Getting inventory...");
         List<ListItem> listItems = db.getInventory();
         System.out.println("Got inventory.");
-//        System.out.println("Create empty string list");
-//        List<String> values = new ArrayList<String>();
-//        System.out.println("Begin adding to string list...");
-//        for (ListItem li : listItems) {
-//        	System.out.println("Add this: " + li.getItem().getName());
-//        	values.add(li.getItem().getName());
-//        }
-//        System.out.println("done");
+        System.out.println("Create empty string list");
+        List<String> values = new ArrayList<String>();
+        System.out.println("Begin adding to string list...");
+        for (ListItem li : listItems) {
+        	System.out.println("Add this: " + li.getItem().getName());
+        	values.add(li.getItem().getName());
+        }
+        System.out.println("done");
         
         
         // Define a new Adapter
