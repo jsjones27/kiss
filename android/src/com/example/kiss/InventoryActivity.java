@@ -27,64 +27,55 @@ public class InventoryActivity extends Activity {
 		setContentView(R.layout.activity_inverntory);
 		
 		// Get ListView object from xml
-        listView = (ListView) findViewById(R.id.list);
-        
-        // Defined Array values to show in ListView
-//        String[] values = new String[] { "Apples", 
-//                                         "Bannas",
-//                                         "Carrots",
-//                                         "Donuts",
-//                                         "Eggs"
-//                                         };
-        
-        
-        System.out.println("Making db helper...");
-        DatabaseHelper db = new DatabaseHelper(this);
-        System.out.println("Getting inventory...");
-        List<ListItem> listItems = db.getInventory();
-        System.out.println("Got inventory.");
-        System.out.println("Create empty string list");
-        List<String> values = new ArrayList<String>();
-        System.out.println("Begin adding to string list...");
-        for (ListItem li : listItems) {
-        	System.out.println("Add this: " + li.getItem().getName());
-        	values.add(li.getItem().getName());
-        }
-        System.out.println("done");
-        db.close();
-        
-        
-        // Define a new Adapter
-        // First parameter - Context
-        // Second parameter - Layout for the row
-        // Third parameter - ID of the TextView to which the data is written
-        // Forth - the Array of data
+		listView = (ListView) findViewById(R.id.list);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-          android.R.layout.simple_list_item_1, android.R.id.text1, values);
-       
+		System.out.println("Making db helper...");
+		DatabaseHelper db = new DatabaseHelper(this);
+		System.out.println("Getting inventory...");
+		List<ListItem> listItems = db.getInventory();
+		System.out.println("Got inventory.");
+		System.out.println("Create empty string list");
+		List<String> values = new ArrayList<String>();
+		System.out.println("Begin adding to string list...");
+		for (ListItem li : listItems) {
+			System.out.println("Add this: " + li.getItem().getName());
+			values.add(li.getItem().getName());
+		}
+		System.out.println("done");
+		db.close();
+		
+		
+		// Define a new Adapter
+		// First parameter - Context
+		// Second parameter - Layout for the row
+		// Third parameter - ID of the TextView to which the data is written
+		// Forth - the Array of data
 
-        // Assign adapter to ListView
-        listView.setAdapter(adapter); 
-        /* 
-        // ListView Item Click Listener
-        listView.setOnClickListener(new OnClickListener() {
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+		  android.R.layout.simple_list_item_1, android.R.id.text1, values);
+	   
 
-              public void onItemClick(AdapterView<?> parent, View view,
-                 int position, long id) {
-                
-               // ListView Clicked item index
-               int itemPosition     = position;
-               
-               // ListView Clicked item value
-               String  itemValue    = (String) listView.getItemAtPosition(position);
-                  
-                // Show Alert 
-                Toast.makeText(getApplicationContext(),
-                  "Position :"+itemPosition+"  ListItem : " +itemValue , Toast.LENGTH_LONG)
-                  .show();
-             
-              }
+		// Assign adapter to ListView
+		listView.setAdapter(adapter); 
+		/* 
+		// ListView Item Click Listener
+		listView.setOnClickListener(new OnClickListener() {
+
+			  public void onItemClick(AdapterView<?> parent, View view,
+				 int position, long id) {
+				
+			   // ListView Clicked item index
+			   int itemPosition	 = position;
+			   
+			   // ListView Clicked item value
+			   String  itemValue	= (String) listView.getItemAtPosition(position);
+				  
+				// Show Alert 
+				Toast.makeText(getApplicationContext(),
+				  "Position :"+itemPosition+"  ListItem : " +itemValue , Toast.LENGTH_LONG)
+				  .show();
+			 
+			  }
 
 			@Override
 			public void onClick(View arg0) {
@@ -92,8 +83,8 @@ public class InventoryActivity extends Activity {
 				
 			}
 
-         }); 
-         */
+		 }); 
+		 */
 	}
 
 	@Override
@@ -105,17 +96,17 @@ public class InventoryActivity extends Activity {
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    // Handle presses on the action bar items
-	    switch (item.getItemId()) {
-	        case R.id.action_add_item:
-	        	Intent intent = new Intent(this, AddItemActivity.class);
-	    		startActivity(intent);
-	            return true;
-	        case R.id.action_settings:
-	            
-	            return true;
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
+		// Handle presses on the action bar items
+		switch (item.getItemId()) {
+			case R.id.action_add_item:
+				Intent intent = new Intent(this, AddItemActivity.class);
+				startActivity(intent);
+				return true;
+			case R.id.action_settings:
+				
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
 	}
 }
