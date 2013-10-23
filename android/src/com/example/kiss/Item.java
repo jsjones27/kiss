@@ -19,7 +19,9 @@ public class Item {
 		this.category = category;
 	}
 	
-	public Item() {}
+	public Item() {
+		this.id = NO_ID;
+	}
 
 	public int getId() {
 		return id;
