@@ -29,19 +29,12 @@ public class InventoryActivity extends Activity {
 		// Get ListView object from xml
 		listView = (ListView) findViewById(R.id.list);
 
-		System.out.println("Making db helper...");
 		DatabaseHelper db = new DatabaseHelper(this);
-		System.out.println("Getting inventory...");
 		List<ListItem> listItems = db.getInventory();
-		System.out.println("Got inventory.");
-		System.out.println("Create empty string list");
 		List<String> values = new ArrayList<String>();
-		System.out.println("Begin adding to string list...");
 		for (ListItem li : listItems) {
-			System.out.println("Add this: " + li.getItem().getName());
 			values.add(li.getItem().getName());
 		}
-		System.out.println("done");
 		db.close();
 		
 		
