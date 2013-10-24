@@ -24,7 +24,7 @@
         </activity>
         <activity
             android:name=".InventoryActivity"
-            android:label="@string/title_activity_inverntory" >
+            android:label="@string/title_activity_inventory" >
         </activity>
         <activity
             android:name=".GroceryActivity"

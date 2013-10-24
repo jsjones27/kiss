@@ -24,7 +24,7 @@ public class InventoryActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_inverntory);
+		setContentView(R.layout.activity_inventory);
 		
 		// Get ListView object from xml
 		listView = (ListView) findViewById(R.id.list);
@@ -83,7 +83,7 @@ public class InventoryActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.inverntory, menu);
+		getMenuInflater().inflate(R.menu.inventory, menu);
 		return true;
 	}
 	
