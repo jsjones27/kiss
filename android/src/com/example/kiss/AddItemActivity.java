@@ -93,15 +93,4 @@ public class AddItemActivity extends Activity {
 		
 		Toast.makeText(getApplicationContext(), "Received " + item.getName(), Toast.LENGTH_LONG).show();
 	}
-	
-	/* Old code from InventoryActivity.java */
-//	public void addItemToInventory(View view){
-//		EditText name = (EditText)findViewById(R.id.editText1);
-//		EditText qnt = (EditText)findViewById(R.id.editText2);
-//		AutoCompleteTextView category = (AutoCompleteTextView)findViewById(R.id.autoCompleteTextView1);
-//		
-//		
-//		
-//		Toast.makeText(getApplicationContext(), "Recieved " + listItem.getItem().getName(), Toast.LENGTH_LONG).show();
-//	}
 }
