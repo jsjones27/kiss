@@ -83,7 +83,6 @@ public class AddItemActivity extends Activity {
 		item.setName(mNameView.getText().toString());
 		item.setCategory(mCategoryView.getText().toString());
 		
-<<<<<<< HEAD
 		ListItem listItem = new ListItem();
 		listItem.setItem(item);
 		listItem.setQuantity(Double.valueOf(mQuantityView.getText().toString()));
@@ -92,10 +91,7 @@ public class AddItemActivity extends Activity {
 		db.addInventoryItem(listItem);
 		db.close();
 		
-		Toast.makeText(getApplicationContext(), "Recieved " + item.getName(), Toast.LENGTH_LONG).show();
-=======
 		Toast.makeText(getApplicationContext(), "Received " + item.getName(), Toast.LENGTH_LONG).show();
->>>>>>> master
 	}
 	
 	/* Old code from InventoryActivity.java */
