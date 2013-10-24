@@ -81,10 +81,16 @@ public class AddItemActivity extends Activity {
 	public void addItemToInventory() {
 		Item item = new Item();
 		item.setName(mNameView.getText().toString());
-		//item.setQuantity(Double.valueOf(mQuantityView.getText().toString()));
 		item.setCategory(mCategoryView.getText().toString());
+		
+		ListItem listItem = new ListItem();
+		listItem.setItem(item);
+		listItem.setQuantity(Double.valueOf(mQuantityView.getText().toString()));
+		
+		DatabaseHelper db = new DatabaseHelper(this);
+		db.addInventoryItem(listItem);
+		db.close();
 		
 		Toast.makeText(getApplicationContext(), "Received " + item.getName(), Toast.LENGTH_LONG).show();
 	}
-	
 }
