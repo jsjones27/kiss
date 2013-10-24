@@ -84,10 +84,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	private void addTableItem(String tableName, ListItem listItem) {
-		/*if (table_name != TABLE_INVENTORY && table_name != TABLE_GROCERY) {
-			throw new Exception("Invalid table name");
-		}*/
-		
 		SQLiteDatabase db = this.getWritableDatabase();
 		
 		if (listItem.getItem().getId() == Item.NO_ID) {
@@ -105,6 +101,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 		
 		String query = "SELECT * FROM " + TABLE_ITEM + " WHERE " + KEY_ID + " = " + itemId;
+		Cursor cursor = db.rawQuery(query, null);
+		
+		if (cursor != null) {
+	        cursor.moveToFirst();
+		}
+		
+		Item item = new Item();
+		item.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+		item.setName(cursor.getString(cursor.getColumnIndex(KEY_NAME)));
+		item.setCategory(cursor.getString(cursor.getColumnIndex(KEY_CATEGORY)));
+		
+		return item;
+	}
+	
+	public Item getItemByName(String itemName) {
+		SQLiteDatabase db = this.getReadableDatabase();
+		
+		String query = "SELECT * FROM " + TABLE_ITEM + " WHERE " + KEY_NAME + " = " + itemName;
 		Cursor cursor = db.rawQuery(query, null);
 		
 		if (cursor != null) {
