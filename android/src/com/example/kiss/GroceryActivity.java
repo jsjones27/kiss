@@ -23,27 +23,27 @@ public class GroceryActivity extends Activity {
 		
 		// Get ListView object from xml
 		 listView = (ListView) findViewById(R.id.list);
-        
-        // Defined Array values to show in ListView
-        String[] values = new String[] { "Apples", 
-                                         "Bannas",
-                                         "Carrots",
-                                         "Donuts",
-                                         "Eggs"
-                                         };
+		
+		// Defined Array values to show in ListView
+		String[] values = new String[] { "Apples", 
+										 "Bannas",
+										 "Carrots",
+										 "Donuts",
+										 "Eggs"
+										 };
 
-        // Define a new Adapter
-        // First parameter - Context
-        // Second parameter - Layout for the row
-        // Third parameter - ID of the TextView to which the data is written
-        // Forth - the Array of data
+		// Define a new Adapter
+		// First parameter - Context
+		// Second parameter - Layout for the row
+		// Third parameter - ID of the TextView to which the data is written
+		// Forth - the Array of data
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-          android.R.layout.simple_list_item_1, android.R.id.text1, values);
-       
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+		  android.R.layout.simple_list_item_1, android.R.id.text1, values);
+	   
 
-        // Assign adapter to ListView
-        listView.setAdapter(adapter); 
+		// Assign adapter to ListView
+		listView.setAdapter(adapter); 
 	}
 
 	@Override
@@ -55,18 +55,18 @@ public class GroceryActivity extends Activity {
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    // Handle presses on the action bar items
-	    switch (item.getItemId()) {
-	        case R.id.action_add_item:
-	        	Intent intent = new Intent(this, AddItemActivity.class);
-	    		startActivity(intent);
-	            return true;
-	        case R.id.action_settings:
-	            
-	            return true;
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
+		// Handle presses on the action bar items
+		switch (item.getItemId()) {
+			case R.id.action_add_item:
+				Intent intent = new Intent(this, AddItemActivity.class);
+				startActivity(intent);
+				return true;
+			case R.id.action_settings:
+				
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
 	}
 
 }

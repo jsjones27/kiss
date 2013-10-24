@@ -60,10 +60,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	public void closeDB() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        if (db != null && db.isOpen())
-            db.close();
-    }
+		SQLiteDatabase db = this.getReadableDatabase();
+		if (db != null && db.isOpen())
+			db.close();
+	}
 	
 	public int addItem(Item item) {
 		SQLiteDatabase db = this.getWritableDatabase();
@@ -108,7 +108,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		Cursor cursor = db.rawQuery(query, null);
 		
 		if (cursor != null) {
-	        cursor.moveToFirst();
+			cursor.moveToFirst();
 		}
 		
 		Item item = new Item();
