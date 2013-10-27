@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 public class AddItemActivity extends Activity {
 
-	// Values for email and password at the time of the login attempt.
 	private String mName;
 	private String mCategory;
 	private int mQuantity;
@@ -44,6 +43,9 @@ public class AddItemActivity extends Activity {
 		mCategoryView = (EditText) findViewById(R.id.category);
 		
 		mQuantityView = (EditText) findViewById(R.id.quantity);
+		
+		DatabaseHelper db = new DatabaseHelper(this);
+		db.resetDatabase();
 		
 	/*	mCategoryView
 				.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -79,16 +81,26 @@ public class AddItemActivity extends Activity {
 	}
 
 	public void addItemToInventory() {
-		Item item = new Item();
-		item.setName(mNameView.getText().toString());
-		item.setCategory(mCategoryView.getText().toString());
+		DatabaseHelper db = new DatabaseHelper(this);
+		
+		String itemName = mNameView.getText().toString();
+		String itemCategory = mCategoryView.getText().toString();
+		Item item = db.getItemByName(itemName);
+		
+		// adds item to the item database if it is not there already
+		if (item == null) {
+			item = new Item();
+			item.setName(itemName);
+			item.setCategory(itemCategory);
+			item.setId(db.addItem(item));
+		}
 		
 		ListItem listItem = new ListItem();
 		listItem.setItem(item);
 		listItem.setQuantity(Double.valueOf(mQuantityView.getText().toString()));
 		
-		DatabaseHelper db = new DatabaseHelper(this);
 		db.addInventoryItem(listItem);
+		
 		db.close();
 		
 		Toast.makeText(getApplicationContext(), "Received " + item.getName(), Toast.LENGTH_LONG).show();

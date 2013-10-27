@@ -86,10 +86,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private void addTableItem(String tableName, ListItem listItem) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		
-		if (listItem.getItem().getId() == Item.NO_ID) {
-			listItem.getItem().setId(addItem(listItem.getItem()));
-		}
-		
 		ContentValues values = new ContentValues();
 		values.put(KEY_ITEM_ID, listItem.getItem().getId());
 		values.put(KEY_QUANTITY, listItem.getQuantity());	
@@ -103,9 +99,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		String query = "SELECT * FROM " + TABLE_ITEM + " WHERE " + KEY_ID + " = " + itemId;
 		Cursor cursor = db.rawQuery(query, null);
 		
-		if (cursor != null) {
-			cursor.moveToFirst();
+		if (cursor == null || cursor.getCount() == 0) {
+			return null;
 		}
+		
+		cursor.moveToFirst();
 		
 		Item item = new Item();
 		item.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
@@ -118,12 +116,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public Item getItemByName(String itemName) {
 		SQLiteDatabase db = this.getReadableDatabase();
 		
-		String query = "SELECT * FROM " + TABLE_ITEM + " WHERE " + KEY_NAME + " = " + itemName;
+		String query = "SELECT * FROM " + TABLE_ITEM + " WHERE " + KEY_NAME + " = '" + itemName + "'";
 		Cursor cursor = db.rawQuery(query, null);
 		
-		if (cursor != null) {
-	        cursor.moveToFirst();
+		if (cursor == null || cursor.getCount() == 0) {
+			return null;
 		}
+		
+		cursor.moveToFirst();
 		
 		Item item = new Item();
 		item.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
