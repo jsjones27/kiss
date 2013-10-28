@@ -13,14 +13,19 @@ public class GroceryActivity extends ItemListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_grocery);
-		
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
 		DatabaseHelper db = new DatabaseHelper(this);
-		List<ListItem> listItems = db.getGrocery();
+		List<ListItem> listItems = db.getInventory();
 		db.close();
 		
 		this.displayList(listItems);
-	}
 
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
