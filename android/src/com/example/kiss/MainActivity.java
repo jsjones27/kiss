@@ -1,7 +1,5 @@
 package com.example.kiss;
 
-import java.util.Vector;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -14,22 +12,6 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-		/* testing code */
-		/*DatabaseHelper db = new DatabaseHelper(this);
-		db.resetDatabase();
-		db.addItem(new Item("C", "A"));
-		db.addItem(new Item("B", "B"));
-		db.addInventoryItem(new ListItem(db.getItem(1), 1));
-		db.addInventoryItem(new ListItem(db.getItem(2), 1));
-		db.deleteInventoryItem(new ListItem(db.getItem(1), 1));
-		db.updateInventoryItem(new ListItem(db.getItem(2), 2));
-		Vector<ListItem> inventory = db.getInventory();
-		for (ListItem listItem : inventory) {
-			System.out.println(listItem.getItem().getName());
-			System.out.println(listItem.getQuantity());
-		}
-		db.close();*/
 	}
 
 	@Override
