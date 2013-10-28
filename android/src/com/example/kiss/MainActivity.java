@@ -15,21 +15,31 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		/* testing code */
-		/*DatabaseHelper db = new DatabaseHelper(this);
-		db.resetDatabase();
-		db.addItem(new Item("C", "A"));
-		db.addItem(new Item("B", "B"));
-		db.addInventoryItem(new ListItem(db.getItem(1), 1));
-		db.addInventoryItem(new ListItem(db.getItem(2), 1));
-		db.deleteInventoryItem(new ListItem(db.getItem(1), 1));
-		db.updateInventoryItem(new ListItem(db.getItem(2), 2));
-		Vector<ListItem> inventory = db.getInventory();
-		for (ListItem listItem : inventory) {
-			System.out.println(listItem.getItem().getName());
-			System.out.println(listItem.getQuantity());
-		}
-		db.close();*/
+		/*Thread thread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				URL url;
+			      HttpURLConnection conn;
+			      BufferedReader rd;
+			      String line;
+			      String result = "";
+			      try {
+			         url = new URL("http://www.searchupc.com/handlers/upcsearch.ashx?request_type=1&access_token=E3EEF9D9-77FA-4362-BA41-12723A8048B0&upc=9781477274156");
+			         rd = new BufferedReader(new InputStreamReader(url.openConnection().getInputStream()));
+			         
+			         while ((line = rd.readLine()) != null) {
+			             String[] RowData = line.split(",");
+			             System.out.println(RowData[0]);
+			            // do something with "data" and "value"
+			        }
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		thread.start();*/
 	}
 
 	@Override
