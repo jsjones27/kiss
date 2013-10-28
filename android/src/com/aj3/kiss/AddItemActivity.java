@@ -81,7 +81,7 @@ public class AddItemActivity extends Activity {
 		return true;
 	}
 	
-	public void addTem() {
+	public void addItem() {
 		Intent intent = getIntent();
 		String callSource = intent.getStringExtra(this.ACTIVITY_CALLER);
 		if(callSource == InventoryActivity.NAME){
