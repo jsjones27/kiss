@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class AddItemActivity extends Activity {
+	public final static String ACTIVITY_CALLER = "activityCaller";
 
 	// Values for email and password at the time of the login attempt.
 	private String mName;
@@ -77,6 +79,16 @@ public class AddItemActivity extends Activity {
 		getMenuInflater().inflate(R.menu.add_item, menu);
 		return true;
 	}
+	
+	public void addTem() {
+		Intent intent = getIntent();
+		String callSource = intent.getStringExtra(this.ACTIVITY_CALLER);
+		if(callSource == InventoryActivity.NAME){
+			this.addItemToInventory();
+		}else if(callSource == GroceryActivity.NAME) {
+			this.addItemToGrocery();
+		}
+	}
 
 	public void addItemToInventory() {
 		Item item = new Item();
@@ -89,6 +101,22 @@ public class AddItemActivity extends Activity {
 		
 		DatabaseHelper db = new DatabaseHelper(this);
 		db.addInventoryItem(listItem);
+		db.close();
+		
+		Toast.makeText(getApplicationContext(), "Received " + item.getName(), Toast.LENGTH_LONG).show();
+	}
+	
+	public void addItemToGrocery() {
+		Item item = new Item();
+		item.setName(mNameView.getText().toString());
+		item.setCategory(mCategoryView.getText().toString());
+		
+		ListItem listItem = new ListItem();
+		listItem.setItem(item);
+		listItem.setQuantity(Double.valueOf(mQuantityView.getText().toString()));
+		
+		DatabaseHelper db = new DatabaseHelper(this);
+		db.addGroceryItem(listItem);
 		db.close();
 		
 		Toast.makeText(getApplicationContext(), "Received " + item.getName(), Toast.LENGTH_LONG).show();

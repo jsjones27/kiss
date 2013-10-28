@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 public class GroceryActivity extends Activity {
+	public static final String NAME = "grocery";
 	
 	 ListView listView;
 
@@ -59,6 +60,7 @@ public class GroceryActivity extends Activity {
 		switch (item.getItemId()) {
 			case R.id.action_add_item:
 				Intent intent = new Intent(this, AddItemActivity.class);
+				intent.putExtra(AddItemActivity.ACTIVITY_CALLER, this.NAME);
 				startActivity(intent);
 				return true;
 			case R.id.action_settings:
