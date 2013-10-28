@@ -1,19 +1,11 @@
 package com.aj3.kiss;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.AutoCompleteTextView;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,16 +16,16 @@ public class AddItemActivity extends Activity {
 
 	// Values for email and password at the time of the login attempt.
 	private String mName;
-	private String mCategory;
-	private int mQuantity;
+//	private String mCategory;
+//	private int mQuantity;
 
 	// UI references.
 	private EditText mNameView;
 	private EditText mCategoryView;
 	private EditText mQuantityView;
-	private View mAddItemFormView;
-	private View mAddItemStatusView;
-	private TextView mAddItemStatusMessageView;
+//	private View mAddItemFormView;
+//	private View mAddItemStatusView;
+//	private TextView mAddItemStatusMessageView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,29 +39,16 @@ public class AddItemActivity extends Activity {
 		mCategoryView = (EditText) findViewById(R.id.category);
 		
 		mQuantityView = (EditText) findViewById(R.id.quantity);
-		
-	/*	mCategoryView
-				.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-					@Override
-					public boolean onEditorAction(TextView textView, int id,
-							KeyEvent keyEvent) {
-						if (id == R.id.login || id == EditorInfo.IME_NULL) {
-							attemptLogin();
-							return true;
-						}
-						return false;
-					}
-				});
-*/
-		mAddItemFormView = findViewById(R.id.login_form);
-		mAddItemStatusView = findViewById(R.id.login_status);
-		mAddItemStatusMessageView = (TextView) findViewById(R.id.login_status_message);
+
+//		mAddItemFormView = findViewById(R.id.login_form);
+//		mAddItemStatusView = findViewById(R.id.login_status);
+//		mAddItemStatusMessageView = (TextView) findViewById(R.id.login_status_message);
 
 		findViewById(R.id.comfirm_button).setOnClickListener(
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
-						addItemToInventory();
+						addItem();
 					}
 				});
 	}
@@ -84,11 +63,15 @@ public class AddItemActivity extends Activity {
 	public void addItem() {
 		Intent intent = getIntent();
 		String callSource = intent.getStringExtra(this.ACTIVITY_CALLER);
-		if(callSource == InventoryActivity.NAME){
+		if(callSource.equals(InventoryActivity.NAME)){
+			Toast.makeText(getApplicationContext(), "Adding Item to " + callSource, Toast.LENGTH_LONG).show();
 			this.addItemToInventory();
-		}else if(callSource == GroceryActivity.NAME) {
+		}else if(callSource.equals(GroceryActivity.NAME)) {
+			Toast.makeText(getApplicationContext(), "Adding Item to " + callSource, Toast.LENGTH_LONG).show();
 			this.addItemToGrocery();
 		}
+		this.finish();
+		
 	}
 
 	public void addItemToInventory() {
@@ -104,7 +87,7 @@ public class AddItemActivity extends Activity {
 		db.addInventoryItem(listItem);
 		db.close();
 		
-		Toast.makeText(getApplicationContext(), "Received " + item.getName(), Toast.LENGTH_LONG).show();
+//		Toast.makeText(getApplicationContext(), "Received " + item.getName(), Toast.LENGTH_LONG).show();
 	}
 	
 	public void addItemToGrocery() {
@@ -120,6 +103,6 @@ public class AddItemActivity extends Activity {
 		db.addGroceryItem(listItem);
 		db.close();
 		
-		Toast.makeText(getApplicationContext(), "Received " + item.getName(), Toast.LENGTH_LONG).show();
+//		Toast.makeText(getApplicationContext(), "Received " + item.getName(), Toast.LENGTH_LONG).show();
 	}
 }

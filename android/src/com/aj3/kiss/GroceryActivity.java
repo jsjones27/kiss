@@ -2,8 +2,11 @@ package com.aj3.kiss;
 
 import java.util.List;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
+
 import com.aj3.kiss.R;
 
 public class GroceryActivity extends ItemListActivity {
@@ -30,6 +33,23 @@ public class GroceryActivity extends ItemListActivity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.grocery, menu);
 		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle presses on the action bar items
+		switch (item.getItemId()) {
+			case R.id.action_add_item:
+				Intent intent = new Intent(this, AddItemActivity.class);
+				intent.putExtra(AddItemActivity.ACTIVITY_CALLER, this.NAME);
+				startActivityForResult(intent, 0);
+				return true;
+			case R.id.action_settings:
+				
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
 	}
 
 }

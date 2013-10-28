@@ -80,20 +80,20 @@ public class ItemListActivity extends Activity {
 //		return true;
 //	}
 	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle presses on the action bar items
-		switch (item.getItemId()) {
-			case R.id.action_add_item:
-				Intent intent = new Intent(this, AddItemActivity.class);
-				intent.putExtra(AddItemActivity.ACTIVITY_CALLER, this.NAME);
-				startActivity(intent);
-				return true;
-			case R.id.action_settings:
-				
-				return true;
-			default:
-				return super.onOptionsItemSelected(item);
-		}
-	}
+//	@Override
+//	public boolean onOptionsItemSelected(MenuItem item) {
+//		// Handle presses on the action bar items
+//		switch (item.getItemId()) {
+//			case R.id.action_add_item:
+//				Intent intent = new Intent(this, AddItemActivity.class);
+//				intent.putExtra(AddItemActivity.ACTIVITY_CALLER, this.NAME);
+//				startActivityForResult(intent, 0);
+//				return true;
+//			case R.id.action_settings:
+//				
+//				return true;
+//			default:
+//				return super.onOptionsItemSelected(item);
+//		}
+//	}
 }
