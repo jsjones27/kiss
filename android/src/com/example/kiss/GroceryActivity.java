@@ -1,4 +1,4 @@
-package com.aj3.kiss;
+package com.example.kiss;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -6,40 +6,32 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.List;
-import java.util.ArrayList;
-
-import com.example.kiss.R;
-
-public class InventoryActivity extends Activity {
-
-	ListView listView;
+public class GroceryActivity extends Activity {
+	
+	 ListView listView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_inverntory);
+		setContentView(R.layout.activity_grocery);
 		
 		// Get ListView object from xml
-		listView = (ListView) findViewById(R.id.list);
+		 listView = (ListView) findViewById(R.id.list);
+		
+		// Defined Array values to show in ListView
+		String[] values = new String[] { "Apples", 
+										 "Bannas",
+										 "Carrots",
+										 "Donuts",
+										 "Eggs"
+										 };
 
-		DatabaseHelper db = new DatabaseHelper(this);
-		List<ListItem> listItems = db.getInventory();
-		List<String> values = new ArrayList<String>();
-		for (ListItem li : listItems) {
-			values.add(li.getItem().getName());
-		}
-		db.close();
-		
-		
 		// Define a new Adapter
 		// First parameter - Context
 		// Second parameter - Layout for the row
@@ -52,40 +44,12 @@ public class InventoryActivity extends Activity {
 
 		// Assign adapter to ListView
 		listView.setAdapter(adapter); 
-		/* 
-		// ListView Item Click Listener
-		listView.setOnClickListener(new OnClickListener() {
-
-			  public void onItemClick(AdapterView<?> parent, View view,
-				 int position, long id) {
-				
-			   // ListView Clicked item index
-			   int itemPosition	 = position;
-			   
-			   // ListView Clicked item value
-			   String  itemValue	= (String) listView.getItemAtPosition(position);
-				  
-				// Show Alert 
-				Toast.makeText(getApplicationContext(),
-				  "Position :"+itemPosition+"  ListItem : " +itemValue , Toast.LENGTH_LONG)
-				  .show();
-			 
-			  }
-
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-		 }); 
-		 */
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.inverntory, menu);
+		getMenuInflater().inflate(R.menu.grocery, menu);
 		return true;
 	}
 	
@@ -104,4 +68,5 @@ public class InventoryActivity extends Activity {
 				return super.onOptionsItemSelected(item);
 		}
 	}
+
 }

@@ -1,8 +1,6 @@
-package com.aj3.kiss;
+package com.example.kiss;
 
 import java.util.Vector;
-
-import com.example.kiss.R;
 
 import android.os.Bundle;
 import android.app.Activity;
