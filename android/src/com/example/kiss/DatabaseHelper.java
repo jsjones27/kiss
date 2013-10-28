@@ -29,7 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		String createItemTableQuery = "CREATE TABLE IF NOT EXISTS " + TABLE_ITEM + " ( " +
 				KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-				KEY_NAME + " TEXT, " +
+				KEY_NAME + " TEXT UNIQUE, " +
 				KEY_CATEGORY + " TEXT )";
 		String createInventoryTableQuery = "CREATE TABLE IF NOT EXISTS " + TABLE_INVENTORY + " ( " +
 				KEY_ITEM_ID + " INTEGER, " +
