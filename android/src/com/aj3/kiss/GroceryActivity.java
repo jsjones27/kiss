@@ -19,11 +19,10 @@ public class GroceryActivity extends ItemListActivity {
 	protected void onResume() {
 		super.onResume();
 		DatabaseHelper db = new DatabaseHelper(this);
-		List<ListItem> listItems = db.getInventory();
+		List<ListItem> listItems = db.getGrocery();
 		db.close();
 		
 		this.displayList(listItems);
-
 	}
 	
 	@Override
