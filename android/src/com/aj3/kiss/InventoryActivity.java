@@ -1,4 +1,4 @@
-package com.example.kiss;
+package com.aj3.kiss;
 
 import android.os.Bundle;
 import android.app.Activity;
