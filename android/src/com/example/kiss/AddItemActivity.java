@@ -44,9 +44,6 @@ public class AddItemActivity extends Activity {
 		
 		mQuantityView = (EditText) findViewById(R.id.quantity);
 		
-		DatabaseHelper db = new DatabaseHelper(this);
-		db.resetDatabase();
-		
 	/*	mCategoryView
 				.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 					@Override
