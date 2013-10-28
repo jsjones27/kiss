@@ -13,6 +13,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+import com.aj3.kiss.R;
 
 import java.util.List;
 import java.util.ArrayList;
