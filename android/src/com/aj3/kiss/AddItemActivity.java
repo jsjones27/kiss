@@ -1,4 +1,6 @@
-package com.example.kiss;
+package com.aj3.kiss;
+
+import com.example.kiss.R;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
