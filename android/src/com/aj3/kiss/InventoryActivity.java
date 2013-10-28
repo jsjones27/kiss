@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class InventoryActivity extends Activity {
+	public static final String NAME = "inventory";
 
 	ListView listView;
 
@@ -94,6 +95,7 @@ public class InventoryActivity extends Activity {
 		switch (item.getItemId()) {
 			case R.id.action_add_item:
 				Intent intent = new Intent(this, AddItemActivity.class);
+				intent.putExtra(AddItemActivity.ACTIVITY_CALLER, this.NAME);
 				startActivity(intent);
 				return true;
 			case R.id.action_settings:
