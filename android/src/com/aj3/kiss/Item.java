@@ -51,4 +51,12 @@ public class Item {
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}	
+	
+	public String toString() {
+		return name;
+	}
+	
+	public boolean equals(Item item) {
+		return this.getName().equals(item.getName());
+	}
 }

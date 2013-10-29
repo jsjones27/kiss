@@ -52,4 +52,13 @@ public class GroceryActivity extends ItemListActivity {
 		}
 	}
 
+	@Override
+	protected void deleteItem(ListItem li) {
+		DatabaseHelper db = new DatabaseHelper(this);
+		db.deleteGroceryItem(li);
+		db.close();
+		this.onResume();
+		
+	}
+
 }

@@ -54,4 +54,13 @@ public class InventoryActivity extends ItemListActivity {
 				return super.onOptionsItemSelected(item);
 		}
 	}
+
+	@Override
+	protected void deleteItem(ListItem li) {
+		DatabaseHelper db = new DatabaseHelper(this);
+		db.deleteInventoryItem(li);
+		db.close();
+		this.onResume();
+		
+	}
 }
