@@ -5,7 +5,8 @@ public class Item {
 	private int id;
 	private String name;
 	private Category category;
-	private String unit;
+	private Unit unit;
+	private String upc;
 	
 	public Item(int id, String name, Category category) {
 		this.id = id;
@@ -44,11 +45,19 @@ public class Item {
 		this.category = category;
 	}
 
-	public String getUnit() {
+	public Unit getUnit() {
 		return unit;
 	}
 
-	public void setUnit(String unit) {
+	public void setUnit(Unit unit) {
 		this.unit = unit;
-	}	
+	}
+	
+	public String getUpc() {
+		return upc;
+	}
+	
+	public void setUpc(String upc) {
+		this.upc = upc;
+	}
 }

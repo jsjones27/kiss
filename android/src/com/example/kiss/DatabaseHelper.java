@@ -17,9 +17,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final String TABLE_INVENTORY = "inventory";
 	private static final String TABLE_GROCERY = "grocery";
 	private static final String TABLE_CATEGORY = "category";
+	private static final String TABLE_UNIT = "unit";
 	private static final String KEY_ID = "id";
 	private static final String KEY_ITEM_ID = "item_id";
 	private static final String KEY_CATEGORY_ID = "category_id";
+	private static final String KEY_UNIT_ID = "unit_id";
+	private static final String KEY_UPC = "upc";
 	private static final String KEY_NAME = "name";
 	private static final String KEY_QUANTITY = "quantity";
 	
@@ -32,7 +35,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		String createItemTableQuery = "CREATE TABLE IF NOT EXISTS " + TABLE_ITEM + " ( " +
 				KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				KEY_NAME + " TEXT UNIQUE, " +
-				KEY_CATEGORY_ID + " INTEGER )";
+				KEY_CATEGORY_ID + " INTEGER, " +
+				KEY_UNIT_ID + " TEXT, " +
+				KEY_UPC + " TEXT )";
 		String createInventoryTableQuery = "CREATE TABLE IF NOT EXISTS " + TABLE_INVENTORY + " ( " +
 				KEY_ITEM_ID + " INTEGER, " +
 				KEY_QUANTITY + " REAL )";
@@ -42,10 +47,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		String createCategoryTableQuery = "CREATE TABLE IF NOT EXISTS " + TABLE_CATEGORY + " ( " +
 				KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				KEY_NAME + " TEXT UNIQUE )";
+		String createUnitTableQuery = "CREATE TABLE IF NOT EXISTS " + TABLE_UNIT + " ( " +
+				KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + 
+				KEY_NAME + "TEXT UNIQUE )";
 		db.execSQL(createItemTableQuery);
 		db.execSQL(createInventoryTableQuery);
 		db.execSQL(createGroceryTableQuery);
 		db.execSQL(createCategoryTableQuery);
+		db.execSQL(createUnitTableQuery);
 	}
 
 	private void dropTables(SQLiteDatabase db) {
@@ -53,6 +62,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_INVENTORY);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_GROCERY);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORY);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_UNIT);
 	}
 	
 	@Override
@@ -82,12 +92,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return (int) db.insert(TABLE_CATEGORY, null, values);
 	}
 	
+	public int addUnit(Unit unit) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		
+		ContentValues values = new ContentValues();
+		values.put(KEY_NAME, unit.getName());
+		
+		return (int) db.insert(TABLE_UNIT, null, values);
+	}
+	
 	public int addItem(Item item) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		
 		ContentValues values = new ContentValues();
 		values.put(KEY_NAME, item.getName());
 		values.put(KEY_CATEGORY_ID, item.getCategory().getId());
+		//values.put(KEY_UNIT_ID, item.getUnit().getId());
+		//values.put(KEY_UPC, item.getUpc());
 		
 		return (int) db.insert(TABLE_ITEM, null, values);
 	}
@@ -136,6 +157,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return getCategory(query);
 	}
 	
+	private Unit getUnit(String query) {
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery(query, null);
+		
+		if (cursor == null || cursor.getCount() == 0) {
+			return null;
+		}
+		
+		cursor.moveToFirst();
+		
+		Unit unit = new Unit();
+		unit.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+		unit.setName(cursor.getString(cursor.getColumnIndex(KEY_NAME)));
+		return unit;
+	}
+	
+	private Unit getUnitById(int unitId) {
+		String query = "SELECT * FROM " + TABLE_UNIT + " WHERE " + KEY_ID + " = " + unitId;
+		return getUnit(query);
+	}
+	
+	public Unit getUnitByName(String unitName) {
+		String query = "SELECT * FROM " + TABLE_UNIT + " WHERE " + KEY_NAME + " = '" + unitName + "'";
+		return getUnit(query);
+	}
+	
 	private Item getItem(String query) {
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery(query, null);
@@ -150,6 +197,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		item.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
 		item.setName(cursor.getString(cursor.getColumnIndex(KEY_NAME)));
 		item.setCategory(getCategoryById(cursor.getInt(cursor.getColumnIndex(KEY_CATEGORY_ID))));
+		item.setUnit(getUnitById(cursor.getInt(cursor.getColumnIndex(KEY_UNIT_ID))));
+		item.setUpc(cursor.getString(cursor.getColumnIndex(KEY_UPC)));
 
 		return item;
 	}
@@ -225,6 +274,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		ContentValues values = new ContentValues();
 		values.put(KEY_NAME, item.getName());
 		values.put(KEY_CATEGORY_ID, item.getCategory().getId());
+		values.put(KEY_UNIT_ID, item.getUnit().getId());
+		values.put(KEY_UPC, item.getUpc());
 		
 		return db.update(TABLE_ITEM, values, KEY_ID + " = ?", new String[] { String.valueOf(item.getId()) });
 	}
