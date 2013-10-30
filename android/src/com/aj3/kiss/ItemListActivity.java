@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -26,6 +27,10 @@ public abstract class ItemListActivity extends Activity {
 		listItems = new ArrayList<ListItem>();
 	}
 	
+	/** Function adds a list of ListItems on the page layout
+	 * in a listView named 'list'
+	 * @param items
+	 */
 	protected void displayList(List<ListItem> items) {
 		this.listItems = items;
 		// Get ListView object from xml
@@ -55,15 +60,24 @@ public abstract class ItemListActivity extends Activity {
 
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-				// TODO Auto-generated method stub
 				showNoticeDialog(listItems.get(arg2));
 				return false;
 			}
 		 }); 
 		
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				showMoveDialog(listItems.get(arg2));
+			}
+		 }); 
+		
 	}
 
-    public void showNoticeDialog(final ListItem li) {
+    protected abstract void showMoveDialog(ListItem listItem) ;
+
+	public void showNoticeDialog(final ListItem li) {
         // Create an instance of the dialog fragment and show it
     	new AlertDialog.Builder(this)
         .setTitle("Delete entry")

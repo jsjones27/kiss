@@ -2,6 +2,8 @@ package com.aj3.kiss;
 
 import java.util.List;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -58,6 +60,34 @@ public class GroceryActivity extends ItemListActivity {
 		db.deleteGroceryItem(li);
 		db.close();
 		this.onResume();
+		
+	}
+	
+	protected void moveItem(ListItem li) {
+		DatabaseHelper db = new DatabaseHelper(this);
+		db.addInventoryItem(li);
+		db.close();
+		this.onResume();
+	}
+
+	@Override
+	protected void showMoveDialog(final ListItem listItem) {
+        // Create an instance of the dialog fragment and show it
+    	new AlertDialog.Builder(this)
+        .setTitle("Move to Inventory")
+        .setMessage("Are you sure you want to move this item to Inventory List?")
+        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) { 
+            	moveItem(listItem);
+            	deleteItem(listItem);
+            }
+         })
+        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) { 
+                // do nothing
+            }
+         })
+         .show();
 		
 	}
 
