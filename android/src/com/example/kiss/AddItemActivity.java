@@ -80,15 +80,24 @@ public class AddItemActivity extends Activity {
 	public void addItemToInventory() {
 		DatabaseHelper db = new DatabaseHelper(this);
 		
+		String categoryName = mCategoryView.getText().toString();
+		Category category = db.getCategoryByName(categoryName);
+		
+		// adds category to the category database if it is not there already
+		if (category == null) {
+			category = new Category();
+			category.setName(categoryName);
+			category.setId(db.addCategory(category));
+		}
+		
 		String itemName = mNameView.getText().toString();
-		String itemCategory = mCategoryView.getText().toString();
 		Item item = db.getItemByName(itemName);
 		
 		// adds item to the item database if it is not there already
 		if (item == null) {
 			item = new Item();
 			item.setName(itemName);
-			item.setCategory(itemCategory);
+			item.setCategory(category);
 			item.setId(db.addItem(item));
 		}
 		
@@ -101,5 +110,11 @@ public class AddItemActivity extends Activity {
 		db.close();
 		
 		Toast.makeText(getApplicationContext(), "Received " + item.getName(), Toast.LENGTH_LONG).show();
+		
+		for (ListItem l : db.getInventory()) {
+			Item i = l.getItem();
+			Category c = i.getCategory();
+			System.out.println("Item ID: " + i.getId() + ", Item Name: " + i.getName() + ", Category ID: " + c.getId() + ", Category Name: " + c.getName());
+		}
 	}
 }

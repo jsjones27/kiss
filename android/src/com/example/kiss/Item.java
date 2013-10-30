@@ -4,16 +4,16 @@ public class Item {
 	public static final int NO_ID = -1;
 	private int id;
 	private String name;
-	private String category;
+	private Category category;
 	private String unit;
 	
-	public Item(int id, String name, String category) {
+	public Item(int id, String name, Category category) {
 		this.id = id;
 		this.name = name;
 		this.category = category;
 	}
 	
-	public Item(String name, String category) {
+	public Item(String name, Category category) {
 		this.id = NO_ID;
 		this.name = name;
 		this.category = category;
@@ -37,10 +37,10 @@ public class Item {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getCategory() {
+	public Category getCategory() {
 		return category;
 	}
-	public void setCategory(String category) {
+	public void setCategory(Category category) {
 		this.category = category;
 	}
 
