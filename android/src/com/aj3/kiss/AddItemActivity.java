@@ -64,16 +64,16 @@ public class AddItemActivity extends Activity {
 	
 	public void addItem() {
 		if(checkIfValid()) {
-//			Intent intent = getIntent();
-//			String callSource = intent.getStringExtra(this.ACTIVITY_CALLER);
-//			if(callSource.equals(InventoryActivity.NAME)){
+			Intent intent = getIntent();
+			String callSource = intent.getStringExtra(this.ACTIVITY_CALLER);
+			if(callSource.equals(InventoryActivity.NAME)){
 //				Toast.makeText(getApplicationContext(), "Adding Item to " + callSource, Toast.LENGTH_LONG).show();
-//				this.addItemToInventory();
-//			}else if(callSource.equals(GroceryActivity.NAME)) {
+				this.addItemToInventory();
+			}else if(callSource.equals(GroceryActivity.NAME)) {
 //				Toast.makeText(getApplicationContext(), "Adding Item to " + callSource, Toast.LENGTH_LONG).show();
-//				this.addItemToGrocery();
-//			}
-//			this.finish();
+				this.addItemToGrocery();
+			}
+			this.finish();
 		} else {
 			
 		}
@@ -92,10 +92,10 @@ public class AddItemActivity extends Activity {
 	            }
 	         })
 	         .show();
-			Toast.makeText(getApplicationContext(), "False", Toast.LENGTH_LONG).show();
+//			Toast.makeText(getApplicationContext(), "False", Toast.LENGTH_LONG).show();
 			return false;
 		} else {
-			Toast.makeText(getApplicationContext(), "True" + mNameView.toString(), Toast.LENGTH_LONG).show();
+//			Toast.makeText(getApplicationContext(), "True" + mNameView.toString(), Toast.LENGTH_LONG).show();
 			return true;
 		}
 	}
