@@ -110,11 +110,5 @@ public class AddItemActivity extends Activity {
 		db.close();
 		
 		Toast.makeText(getApplicationContext(), "Received " + item.getName(), Toast.LENGTH_LONG).show();
-		
-		for (ListItem l : db.getInventory()) {
-			Item i = l.getItem();
-			Category c = i.getCategory();
-			System.out.println("Item ID: " + i.getId() + ", Item Name: " + i.getName() + ", Category ID: " + c.getId() + ", Category Name: " + c.getName());
-		}
 	}
 }

@@ -164,6 +164,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return getItem(query);
 	}
 	
+	public ListItem getGroceryItem(Item item) {
+		return getListItem(TABLE_GROCERY, item);
+	}
+	
+	public ListItem getInventoryItem(Item item) {
+		return getListItem(TABLE_INVENTORY, item);
+	}
+	
+	private ListItem getListItem(String tableName, Item item) {
+		SQLiteDatabase db = this.getReadableDatabase();
+		
+		String query = "SELECT * FROM " + tableName + " WHERE " + KEY_ITEM_ID + " = " + item.getId();
+		Cursor cursor = db.rawQuery(query, null);
+
+		if (cursor == null || cursor.getCount() == 0) {
+			return null;
+		}
+
+		cursor.moveToFirst();
+
+		ListItem listItem = new ListItem();
+		listItem.setItem(getItemById(cursor.getInt(cursor.getColumnIndex(KEY_ITEM_ID))));
+		listItem.setQuantity(cursor.getInt(cursor.getColumnIndex(KEY_QUANTITY)));
+
+		return listItem;
+	}
+	
 	public Vector<ListItem> getGrocery() {
 		return getList(TABLE_GROCERY);
 	}
