@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
-import com.aj3.kiss.R;
 
 public class MainActivity extends Activity {
 

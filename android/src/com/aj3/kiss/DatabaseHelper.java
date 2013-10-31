@@ -152,7 +152,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	public Category getCategoryByName(String categoryName) {
-		String query = "SELECT * FROM " + TABLE_CATEGORY + " WHERE " + KEY_NAME + " = '" + categoryName + "'";
+		String query = "SELECT * FROM " + TABLE_CATEGORY + " WHERE " + KEY_NAME + " = '" + categoryName.replace("'", "\'\'") + "'";
 		return getCategory(query);
 	}
 	
@@ -178,7 +178,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	public Unit getUnitByName(String unitName) {
-		String query = "SELECT * FROM " + TABLE_UNIT + " WHERE " + KEY_NAME + " = '" + unitName + "'";
+		String query = "SELECT * FROM " + TABLE_UNIT + " WHERE " + KEY_NAME + " = '" + unitName.replace("'", "\'\'") + "'";
 		return getUnit(query);
 	}
 	
@@ -208,7 +208,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	public Item getItemByName(String itemName) {
-		String query = "SELECT * FROM " + TABLE_ITEM + " WHERE " + KEY_NAME + " = '" + itemName + "'";
+		String query = "SELECT * FROM " + TABLE_ITEM + " WHERE " + KEY_NAME + " = '" + itemName.replace("'", "\'\'") + "'";
 		return getItem(query);
 	}
 	

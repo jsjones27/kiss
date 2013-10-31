@@ -1,9 +1,19 @@
 package com.aj3.kiss;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,6 +50,9 @@ public class AddItemActivity extends Activity {
 		mCategoryView = (EditText) findViewById(R.id.category);
 		
 		mQuantityView = (EditText) findViewById(R.id.quantity);
+		
+		mScanResult = (EditText) findViewById(R.id.scan_result_message);
+		mScanResult.setVisibility(View.GONE);
 
 //		mAddItemFormView = findViewById(R.id.login_form);
 //		mAddItemStatusView = findViewById(R.id.login_status);
@@ -52,7 +65,6 @@ public class AddItemActivity extends Activity {
 						addItem();
 					}
 				});
-		
 	}
 
 	@Override
@@ -93,8 +105,9 @@ public class AddItemActivity extends Activity {
 
 		if (scanResult != null) {
 			String barcode;
-			barcode= scanResult.getContents();
+			barcode = scanResult.getContents();
 			mScanResult.setText(barcode);
+			new GetItemFromUpc().execute(barcode);
 		}
 		else
 		{
@@ -181,5 +194,40 @@ public class AddItemActivity extends Activity {
 		listItem.setQuantity(Double.valueOf(mQuantityView.getText().toString()));
 		
 		return listItem;
+	}
+	
+	private class GetItemFromUpc extends AsyncTask <String, Void, String> {
+		// to use: new GetItemFromUpc().execute(UPC_GOES_HERE);
+		
+		@Override
+		protected String doInBackground(String... upc) {
+			try {
+				URL url = new URL("http://www.searchupc.com/handlers/upcsearch.ashx?request_type=1&access_token=E3EEF9D9-77FA-4362-BA41-12723A8048B0&upc=" + upc[0]);
+				URLConnection conn = url.openConnection();
+				InputStreamReader isr = new InputStreamReader(conn.getInputStream());
+				BufferedReader rd = new BufferedReader(isr);
+				rd.readLine();
+				String itemName = rd.readLine().split(",")[0];
+				itemName = itemName.substring(1, itemName.length()-1);
+				return itemName;
+			} catch (Exception e) {
+				e.printStackTrace();
+				return "";
+			}
+		}
+
+		@Override
+		protected void onPostExecute(String itemName) {
+			DatabaseHelper db = new DatabaseHelper(getApplicationContext());
+			
+			mNameView.setText(itemName);
+			Item item = db.getItemByName(itemName);
+			if (item != null) {
+				Category category = item.getCategory();
+				if (category != null) {
+					mCategoryView.setText(category.getName());
+				}
+			}
+		}
 	}
 }
