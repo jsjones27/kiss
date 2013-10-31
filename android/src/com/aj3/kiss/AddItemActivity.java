@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -110,7 +111,6 @@ public class AddItemActivity extends Activity {
 	}
 
 	public void addItemToInventory() {
-		new GetItemFromUpc().execute("0688267080708");
 		Item item = new Item();
 		item.setName(mNameView.getText().toString());
 		item.setCategory(mCategoryView.getText().toString());
@@ -146,18 +146,13 @@ public class AddItemActivity extends Activity {
 		
 		@Override
 		protected String doInBackground(String... upc) {
-			URL url;
-			HttpURLConnection conn;
-			BufferedReader rd;
-			String result = "";
 			try {
-				url = new URL("http://www.searchupc.com/handlers/upcsearch.ashx?request_type=1&access_token=E3EEF9D9-77FA-4362-BA41-12723A8048B0&upc=" + upc[0]);
-				rd = new BufferedReader(new InputStreamReader(url.openConnection().getInputStream()));
-
+				URL url = new URL("http://www.searchupc.com/handlers/upcsearch.ashx?request_type=1&access_token=E3EEF9D9-77FA-4362-BA41-12723A8048B0&upc=" + upc[0]);
+				URLConnection conn = url.openConnection();
+				InputStreamReader isr = new InputStreamReader(conn.getInputStream());
+				BufferedReader rd = new BufferedReader(isr);
 				rd.readLine();
-				String line = rd.readLine();
-				String[] RowData = line.split(",");
-				return RowData[0];
+				return rd.readLine().split(",")[0];
 			} catch (Exception e) {
 				return "";
 			}
@@ -165,7 +160,7 @@ public class AddItemActivity extends Activity {
 
 		@Override
 		protected void onPostExecute(String itemName) {
-			System.out.println(itemName);
+			return;
 		}
 	}
 }
