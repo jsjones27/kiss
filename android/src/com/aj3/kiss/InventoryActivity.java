@@ -46,7 +46,7 @@ public class InventoryActivity extends ItemListActivity {
 		switch (item.getItemId()) {
 			case R.id.action_add_item:
 				Intent intent = new Intent(this, AddItemActivity.class);
-				intent.putExtra(AddItemActivity.ACTIVITY_CALLER, this.NAME);
+				intent.putExtra(AddItemActivity.ACTIVITY_CALLER, InventoryActivity.NAME);
 				startActivity(intent);
 				return true;
 			case R.id.action_settings:
