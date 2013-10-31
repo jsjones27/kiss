@@ -19,9 +19,8 @@ public class InventoryActivity extends ItemListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_inventory);
-		
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -30,7 +29,6 @@ public class InventoryActivity extends ItemListActivity {
 		db.close();
 		
 		this.displayList(listItems);
-
 	}
 
 	@Override
