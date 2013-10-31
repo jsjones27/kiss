@@ -1,4 +1,4 @@
-package com.aj3.kiss;
+package com.aj3.kiss.helpers;
 
 import java.util.Vector;
 
