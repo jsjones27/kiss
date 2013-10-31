@@ -8,9 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.aj3.kiss.R;
 
@@ -86,6 +84,7 @@ public class AddItemActivity extends Activity {
 			e.printStackTrace();
 			Toast.makeText(getApplicationContext(), "ERROR:" + e, Toast.LENGTH_LONG).show();
 		}
+	
 	}		 
 
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -106,7 +105,7 @@ public class AddItemActivity extends Activity {
 	public void addItem() {
 		if(checkIfValid()) {
 			Intent intent = getIntent();
-			String callSource = intent.getStringExtra(this.ACTIVITY_CALLER);
+			String callSource = intent.getStringExtra(AddItemActivity.ACTIVITY_CALLER);
 			if(callSource.equals(InventoryActivity.NAME)){
 //				Toast.makeText(getApplicationContext(), "Adding Item to " + callSource, Toast.LENGTH_LONG).show();
 				this.addItemToInventory();
