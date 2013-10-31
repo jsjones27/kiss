@@ -71,7 +71,6 @@ public class AddItemActivity extends Activity {
 				scanItem();
 				return true;
 			case R.id.action_settings:
-				
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
@@ -81,29 +80,26 @@ public class AddItemActivity extends Activity {
 	//Scans the barcode and returns the product
 	public void scanItem(){
 		try {
-			
 			IntentIntegrator integrator = new IntentIntegrator(this);
 			integrator.initiateScan();
-
-			} catch (Exception e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 			Toast.makeText(getApplicationContext(), "ERROR:" + e, Toast.LENGTH_LONG).show();
 		}
 	}		 
 
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-		  IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-		  mScanResult = (EditText) findViewById(R.id.scan_result_message);
+		IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+		mScanResult = (EditText) findViewById(R.id.scan_result_message);
 
-		  if (scanResult != null) {
-			  String barcode;
-			  barcode= scanResult.getContents();
-			  mScanResult.setText(barcode);
-		  }
-		  else
-		  {
-		  mScanResult.setText("Error");
+		if (scanResult != null) {
+			String barcode;
+			barcode= scanResult.getContents();
+			mScanResult.setText(barcode);
+		}
+		else
+		{
+			mScanResult.setText("Error");
 		}
 	}
 
