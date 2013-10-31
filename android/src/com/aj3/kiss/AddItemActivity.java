@@ -62,6 +62,8 @@ public class AddItemActivity extends Activity {
 						addItem();
 					}
 				});
+		
+		new GetItemFromUpc().execute("0634479570629");
 	}
 
 	@Override
@@ -163,7 +165,9 @@ public class AddItemActivity extends Activity {
 				InputStreamReader isr = new InputStreamReader(conn.getInputStream());
 				BufferedReader rd = new BufferedReader(isr);
 				rd.readLine();
-				return rd.readLine().split(",")[0];
+				String itemName = rd.readLine().split(",")[0];
+				itemName = itemName.substring(1, itemName.length()-1);
+				return itemName;
 			} catch (Exception e) {
 				return "";
 			}
@@ -171,7 +175,16 @@ public class AddItemActivity extends Activity {
 
 		@Override
 		protected void onPostExecute(String itemName) {
-			return;
+			DatabaseHelper db = new DatabaseHelper(getApplicationContext());
+			
+			mNameView.setText(itemName);
+			Item item = db.getItemByName(itemName);
+			if (item != null) {
+				Category category = item.getCategory();
+				if (category != null) {
+					mCategoryView.setText(category.getName());
+				}
+			}
 		}
 	}
 }
