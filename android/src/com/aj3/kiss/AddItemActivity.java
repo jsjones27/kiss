@@ -101,39 +101,17 @@ public class AddItemActivity extends Activity {
 
 	public void addItemToInventory() {
 		DatabaseHelper db = new DatabaseHelper(this);
-		
-		String categoryName = mCategoryView.getText().toString();
-		Category category = db.getCategoryByName(categoryName);
-		
-		// adds category to the category database if it is not there already
-		if (category == null) {
-			category = new Category();
-			category.setName(categoryName);
-			category.setId(db.addCategory(category));
-		}
-		
-		String itemName = mNameView.getText().toString();
-		Item item = db.getItemByName(itemName);
-		
-		// adds item to the item database if it is not there already
-		if (item == null) {
-			item = new Item();
-			item.setName(itemName);
-			item.setCategory(category);
-			item.setId(db.addItem(item));
-		}
-		
-		ListItem listItem = new ListItem();
-		listItem.setItem(item);
-		listItem.setQuantity(Double.valueOf(mQuantityView.getText().toString()));
-		
-		db.addInventoryItem(listItem);
-
+		db.addInventoryItem(getItemToAdd());
 		db.close();
-
 	}
 	
 	public void addItemToGrocery() {
+		DatabaseHelper db = new DatabaseHelper(this);
+		db.addGroceryItem(getItemToAdd());
+		db.close();
+	}
+	
+	private ListItem getItemToAdd() {
 		DatabaseHelper db = new DatabaseHelper(this);
 		
 		String categoryName = mCategoryView.getText().toString();
@@ -161,8 +139,6 @@ public class AddItemActivity extends Activity {
 		listItem.setItem(item);
 		listItem.setQuantity(Double.valueOf(mQuantityView.getText().toString()));
 		
-		db.addGroceryItem(listItem);
-		
-		db.close();
+		return listItem;
 	}
 }
