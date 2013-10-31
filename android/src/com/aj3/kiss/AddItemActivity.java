@@ -208,7 +208,13 @@ public class AddItemActivity extends Activity {
 				BufferedReader rd = new BufferedReader(isr);
 				rd.readLine();
 				String itemName = rd.readLine().split(",")[0];
-				itemName = itemName.substring(1, itemName.length()-1);
+				itemName.trim();
+				if(itemName.substring(itemName.length()-1, itemName.length()).equals("\"")) {
+					itemName = itemName.substring(0, itemName.length()-1);
+				}
+				if(itemName.substring(0, 1).equals("\"")) {
+					itemName = itemName.substring(1, itemName.length());
+				}
 				return itemName;
 			} catch (Exception e) {
 				e.printStackTrace();
