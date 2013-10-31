@@ -1,41 +1,34 @@
-package com.example.kiss;
+package com.aj3.kiss;
 
-import android.os.Bundle;
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
-import android.view.Menu;
+import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import java.util.List;
-import java.util.ArrayList;
-
-public class InventoryActivity extends Activity {
+public class ItemListActivity extends Activity {
+	public static final String NAME = "itemList";
 
 	ListView listView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_inverntory);
-		
+	}
+	
+	protected void displayList(List<ListItem> items) {
+
 		// Get ListView object from xml
 		listView = (ListView) findViewById(R.id.list);
 
-		DatabaseHelper db = new DatabaseHelper(this);
-		List<ListItem> listItems = db.getInventory();
 		List<String> values = new ArrayList<String>();
-		for (ListItem li : listItems) {
+		for (ListItem li : items) {
 			values.add(li.getItem().getName());
 		}
-		db.close();
 		
 		
 		// Define a new Adapter
@@ -80,12 +73,12 @@ public class InventoryActivity extends Activity {
 		 */
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.inverntory, menu);
-		return true;
-	}
+//	@Override
+//	public boolean onCreateOptionsMenu(Menu menu) {
+//		// Inflate the menu; this adds items to the action bar if it is present.
+//		getMenuInflater().inflate(R.menu.inventory, menu);
+//		return true;
+//	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -93,6 +86,7 @@ public class InventoryActivity extends Activity {
 		switch (item.getItemId()) {
 			case R.id.action_add_item:
 				Intent intent = new Intent(this, AddItemActivity.class);
+				intent.putExtra(AddItemActivity.ACTIVITY_CALLER, this.NAME);
 				startActivity(intent);
 				return true;
 			case R.id.action_settings:

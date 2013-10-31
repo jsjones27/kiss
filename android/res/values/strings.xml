@@ -4,7 +4,7 @@
     <string name="app_name">kiss</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_inverntory">InverntoryActivity</string>
+    <string name="title_activity_inventory">InventoryActivity</string>
     <string name="title_activity_grocery">GroceryActivity</string>
     <string name="prompt_item_name">Item Name</string>
     <string name="prompt_category">Category</string>

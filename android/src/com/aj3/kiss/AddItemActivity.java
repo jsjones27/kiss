@@ -1,9 +1,10 @@
-package com.example.kiss;
+package com.aj3.kiss;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,8 +17,10 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.aj3.kiss.R;
 
 public class AddItemActivity extends Activity {
+	public final static String ACTIVITY_CALLER = "activityCaller";
 
 	private String mName;
 	private String mCategory;
@@ -76,6 +79,16 @@ public class AddItemActivity extends Activity {
 		getMenuInflater().inflate(R.menu.add_item, menu);
 		return true;
 	}
+	
+	public void addItem() {
+		Intent intent = getIntent();
+		String callSource = intent.getStringExtra(this.ACTIVITY_CALLER);
+		if(callSource == InventoryActivity.NAME){
+			this.addItemToInventory();
+		}else if(callSource == GroceryActivity.NAME) {
+			this.addItemToGrocery();
+		}
+	}
 
 	public void addItemToInventory() {
 		DatabaseHelper db = new DatabaseHelper(this);
@@ -107,6 +120,22 @@ public class AddItemActivity extends Activity {
 		
 		db.addInventoryItem(listItem);
 		
+		db.close();
+		
+		Toast.makeText(getApplicationContext(), "Received " + item.getName(), Toast.LENGTH_LONG).show();
+	}
+	
+	public void addItemToGrocery() {
+		Item item = new Item();
+		item.setName(mNameView.getText().toString());
+		item.setCategory(mCategoryView.getText().toString());
+		
+		ListItem listItem = new ListItem();
+		listItem.setItem(item);
+		listItem.setQuantity(Double.valueOf(mQuantityView.getText().toString()));
+		
+		DatabaseHelper db = new DatabaseHelper(this);
+		db.addGroceryItem(listItem);
 		db.close();
 		
 		Toast.makeText(getApplicationContext(), "Received " + item.getName(), Toast.LENGTH_LONG).show();

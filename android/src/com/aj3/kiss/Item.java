@@ -1,4 +1,4 @@
-package com.example.kiss;
+package com.aj3.kiss;
 
 public class Item {
 	public static final int NO_ID = -1;
