@@ -102,8 +102,9 @@ public class AddItemActivity extends Activity {
 
 		if (scanResult != null) {
 			String barcode;
-			barcode= scanResult.getContents();
+			barcode = scanResult.getContents();
 			mScanResult.setText(barcode);
+			new GetItemFromUpc().execute(barcode);
 		}
 		else
 		{
