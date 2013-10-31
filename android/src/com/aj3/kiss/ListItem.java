@@ -26,4 +26,12 @@ public class ListItem {
 	public void setQuantity(double quantity) {
 		this.quantity = quantity;
 	}
+	
+	public String toString() {
+		return item.toString();
+	}
+	
+	public boolean equals(ListItem li) {
+		return this.getItem().equals(li.getItem());
+	}
 }
