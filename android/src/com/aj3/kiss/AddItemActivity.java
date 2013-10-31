@@ -6,10 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.aj3.kiss.R;
 
@@ -24,6 +23,7 @@ public class AddItemActivity extends Activity {
 	private EditText mNameView;
 	private EditText mCategoryView;
 	private EditText mQuantityView;
+	private EditText mScanResult;
 //	private View mAddItemFormView;
 //	private View mAddItemStatusView;
 //	private TextView mAddItemStatusMessageView;
@@ -52,6 +52,7 @@ public class AddItemActivity extends Activity {
 						addItem();
 					}
 				});
+		
 	}
 
 	@Override
@@ -61,10 +62,50 @@ public class AddItemActivity extends Activity {
 		return true;
 	}
 	
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle presses on the action bar items
+		switch (item.getItemId()) {
+			case R.id.action_scan_item:
+				scanItem();
+				return true;
+			case R.id.action_settings:
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
+	
+	//Scans the barcode and returns the product
+	public void scanItem(){
+		try {
+			IntentIntegrator integrator = new IntentIntegrator(this);
+			integrator.initiateScan();
+		} catch (Exception e) {
+			e.printStackTrace();
+			Toast.makeText(getApplicationContext(), "ERROR:" + e, Toast.LENGTH_LONG).show();
+		}
+	
+	}		 
+
+	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+		mScanResult = (EditText) findViewById(R.id.scan_result_message);
+
+		if (scanResult != null) {
+			String barcode;
+			barcode= scanResult.getContents();
+			mScanResult.setText(barcode);
+		}
+		else
+		{
+			mScanResult.setText("Error");
+		}
+	}
+
 	public void addItem() {
 		if(checkIfValid()) {
 			Intent intent = getIntent();
-			String callSource = intent.getStringExtra(this.ACTIVITY_CALLER);
+			String callSource = intent.getStringExtra(AddItemActivity.ACTIVITY_CALLER);
 			if(callSource.equals(InventoryActivity.NAME)){
 //				Toast.makeText(getApplicationContext(), "Adding Item to " + callSource, Toast.LENGTH_LONG).show();
 				this.addItemToInventory();
