@@ -2,6 +2,11 @@ package com.aj3.kiss;
 
 import java.util.Vector;
 
+import com.aj3.kiss.models.Category;
+import com.aj3.kiss.models.Item;
+import com.aj3.kiss.models.ListItem;
+import com.aj3.kiss.models.Unit;
+
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;

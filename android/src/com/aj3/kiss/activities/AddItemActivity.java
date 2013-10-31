@@ -21,16 +21,16 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.aj3.kiss.Category;
 import com.aj3.kiss.DatabaseHelper;
 import com.aj3.kiss.IntentIntegrator;
 import com.aj3.kiss.IntentResult;
-import com.aj3.kiss.Item;
-import com.aj3.kiss.ListItem;
 import com.aj3.kiss.R;
 import com.aj3.kiss.R.id;
 import com.aj3.kiss.R.layout;
 import com.aj3.kiss.R.menu;
+import com.aj3.kiss.models.Category;
+import com.aj3.kiss.models.Item;
+import com.aj3.kiss.models.ListItem;
 
 public class AddItemActivity extends Activity {
 	public final static String ACTIVITY_CALLER = "activityCaller";

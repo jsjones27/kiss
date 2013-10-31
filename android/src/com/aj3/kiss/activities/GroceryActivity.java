@@ -10,11 +10,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.aj3.kiss.DatabaseHelper;
-import com.aj3.kiss.ListItem;
 import com.aj3.kiss.R;
 import com.aj3.kiss.R.id;
 import com.aj3.kiss.R.layout;
 import com.aj3.kiss.R.menu;
+import com.aj3.kiss.models.ListItem;
 
 public class GroceryActivity extends ItemListActivity {
 	public static final String NAME = "grocery";
