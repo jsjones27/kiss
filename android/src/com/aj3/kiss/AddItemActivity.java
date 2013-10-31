@@ -50,6 +50,9 @@ public class AddItemActivity extends Activity {
 		mCategoryView = (EditText) findViewById(R.id.category);
 		
 		mQuantityView = (EditText) findViewById(R.id.quantity);
+		
+		mScanResult = (EditText) findViewById(R.id.scan_result_message);
+		mScanResult.setVisibility(View.GONE);
 
 //		mAddItemFormView = findViewById(R.id.login_form);
 //		mAddItemStatusView = findViewById(R.id.login_status);
@@ -208,6 +211,7 @@ public class AddItemActivity extends Activity {
 				itemName = itemName.substring(1, itemName.length()-1);
 				return itemName;
 			} catch (Exception e) {
+				e.printStackTrace();
 				return "";
 			}
 		}
