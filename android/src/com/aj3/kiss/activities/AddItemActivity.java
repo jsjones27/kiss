@@ -1,4 +1,4 @@
-package com.aj3.kiss;
+package com.aj3.kiss.activities;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -20,7 +20,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.aj3.kiss.Category;
+import com.aj3.kiss.DatabaseHelper;
+import com.aj3.kiss.IntentIntegrator;
+import com.aj3.kiss.IntentResult;
+import com.aj3.kiss.Item;
+import com.aj3.kiss.ListItem;
 import com.aj3.kiss.R;
+import com.aj3.kiss.R.id;
+import com.aj3.kiss.R.layout;
+import com.aj3.kiss.R.menu;
 
 public class AddItemActivity extends Activity {
 	public final static String ACTIVITY_CALLER = "activityCaller";

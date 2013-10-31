@@ -18,7 +18,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.aj3.kiss.MainActivity"
+            android:name="com.aj3.kiss.activities.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,15 +27,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.aj3.kiss.InventoryActivity"
+            android:name="com.aj3.kiss.activities.InventoryActivity"
             android:label="@string/title_activity_inventory" >
         </activity>
         <activity
-            android:name="com.aj3.kiss.GroceryActivity"
+            android:name="com.aj3.kiss.activities.GroceryActivity"
             android:label="@string/title_activity_grocery" >
         </activity>
         <activity
-            android:name="com.aj3.kiss.AddItemActivity"
+            android:name="com.aj3.kiss.activities.AddItemActivity"
             android:label="@string/title_activity_add_item"
             android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
