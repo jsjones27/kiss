@@ -4,16 +4,17 @@ public class Item {
 	public static final int NO_ID = -1;
 	private int id;
 	private String name;
-	private String category;
-	private String unit;
+	private Category category;
+	private Unit unit;
+	private String upc;
 	
-	public Item(int id, String name, String category) {
+	public Item(int id, String name, Category category) {
 		this.id = id;
 		this.name = name;
 		this.category = category;
 	}
 	
-	public Item(String name, String category) {
+	public Item(String name, Category category) {
 		this.id = NO_ID;
 		this.name = name;
 		this.category = category;
@@ -37,19 +38,28 @@ public class Item {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getCategory() {
+	public Category getCategory() {
 		return category;
 	}
-	public void setCategory(String category) {
+	public void setCategory(Category category) {
 		this.category = category;
 	}
 
-	public String getUnit() {
+	public Unit getUnit() {
 		return unit;
 	}
 
-	public void setUnit(String unit) {
+	public void setUnit(Unit unit) {
 		this.unit = unit;
+
+	}
+	
+	public String getUpc() {
+		return upc;
+	}
+	
+	public void setUpc(String upc) {
+		this.upc = upc;
 	}	
 	
 	public String toString() {
