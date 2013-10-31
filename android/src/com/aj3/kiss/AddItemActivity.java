@@ -1,5 +1,10 @@
 package com.aj3.kiss;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
@@ -92,6 +97,7 @@ public class AddItemActivity extends Activity {
 	}
 
 	public void addItemToInventory() {
+		new GetItemFromUpc().execute("0688267080708");
 		Item item = new Item();
 		item.setName(mNameView.getText().toString());
 		item.setCategory(mCategoryView.getText().toString());
@@ -121,5 +127,32 @@ public class AddItemActivity extends Activity {
 		db.close();
 		
 		Toast.makeText(getApplicationContext(), "Received " + item.getName(), Toast.LENGTH_LONG).show();
+	}
+	
+	private class GetItemFromUpc extends AsyncTask <String, Void, String> {
+		
+		@Override
+		protected String doInBackground(String... upc) {
+			URL url;
+			HttpURLConnection conn;
+			BufferedReader rd;
+			String result = "";
+			try {
+				url = new URL("http://www.searchupc.com/handlers/upcsearch.ashx?request_type=1&access_token=E3EEF9D9-77FA-4362-BA41-12723A8048B0&upc=" + upc[0]);
+				rd = new BufferedReader(new InputStreamReader(url.openConnection().getInputStream()));
+
+				rd.readLine();
+				String line = rd.readLine();
+				String[] RowData = line.split(",");
+				return RowData[0];
+			} catch (Exception e) {
+				return "";
+			}
+		}
+
+		@Override
+		protected void onPostExecute(String itemName) {
+			System.out.println(itemName);
+		}
 	}
 }
