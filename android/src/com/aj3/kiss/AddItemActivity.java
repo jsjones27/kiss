@@ -26,7 +26,6 @@ import com.aj3.kiss.R;
 public class AddItemActivity extends Activity {
 	public final static String ACTIVITY_CALLER = "activityCaller";
 
-	// Values for email and password at the time of the login attempt.
 	private String mName;
 //	private String mCategory;
 //	private int mQuantity;
@@ -111,35 +110,70 @@ public class AddItemActivity extends Activity {
 	}
 
 	public void addItemToInventory() {
-		Item item = new Item();
-		item.setName(mNameView.getText().toString());
-		item.setCategory(mCategoryView.getText().toString());
+		DatabaseHelper db = new DatabaseHelper(this);
+		
+		String categoryName = mCategoryView.getText().toString();
+		Category category = db.getCategoryByName(categoryName);
+		
+		// adds category to the category database if it is not there already
+		if (category == null) {
+			category = new Category();
+			category.setName(categoryName);
+			category.setId(db.addCategory(category));
+		}
+		
+		String itemName = mNameView.getText().toString();
+		Item item = db.getItemByName(itemName);
+		
+		// adds item to the item database if it is not there already
+		if (item == null) {
+			item = new Item();
+			item.setName(itemName);
+			item.setCategory(category);
+			item.setId(db.addItem(item));
+		}
 		
 		ListItem listItem = new ListItem();
 		listItem.setItem(item);
 		listItem.setQuantity(Double.valueOf(mQuantityView.getText().toString()));
 		
-		DatabaseHelper db = new DatabaseHelper(this);
 		db.addInventoryItem(listItem);
+
 		db.close();
-		
-//		Toast.makeText(getApplicationContext(), "Received " + item.getName(), Toast.LENGTH_LONG).show();
+
 	}
 	
 	public void addItemToGrocery() {
-		Item item = new Item();
-		item.setName(mNameView.getText().toString());
-		item.setCategory(mCategoryView.getText().toString());
+		DatabaseHelper db = new DatabaseHelper(this);
+		
+		String categoryName = mCategoryView.getText().toString();
+		Category category = db.getCategoryByName(categoryName);
+		
+		// adds category to the category database if it is not there already
+		if (category == null) {
+			category = new Category();
+			category.setName(categoryName);
+			category.setId(db.addCategory(category));
+		}
+		
+		String itemName = mNameView.getText().toString();
+		Item item = db.getItemByName(itemName);
+		
+		// adds item to the item database if it is not there already
+		if (item == null) {
+			item = new Item();
+			item.setName(itemName);
+			item.setCategory(category);
+			item.setId(db.addItem(item));
+		}
 		
 		ListItem listItem = new ListItem();
 		listItem.setItem(item);
 		listItem.setQuantity(Double.valueOf(mQuantityView.getText().toString()));
 		
-		DatabaseHelper db = new DatabaseHelper(this);
 		db.addGroceryItem(listItem);
-		db.close();
 		
-//		Toast.makeText(getApplicationContext(), "Received " + item.getName(), Toast.LENGTH_LONG).show();
+		db.close();
 	}
 	
 	private class GetItemFromUpc extends AsyncTask <String, Void, String> {
