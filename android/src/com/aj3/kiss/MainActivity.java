@@ -13,6 +13,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		addItemToGrocery();
 	}
 
 	@Override
@@ -31,5 +32,4 @@ public class MainActivity extends Activity {
 		Intent intent = new Intent(this, GroceryActivity.class);
 		startActivity(intent);
 	}
-
 }

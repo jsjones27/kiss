@@ -4,30 +4,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.app.AlertDialog;
+
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class ItemListActivity extends Activity {
+public abstract class ItemListActivity extends Activity {
 	public static final String NAME = "itemList";
 
-	ListView listView;
+	protected List<ListItem> listItems;
+	protected ListView listView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		listItems = new ArrayList<ListItem>();
 	}
 	
+	/** Function adds a list of ListItems on the page layout
+	 * in a listView named 'list'
+	 * @param items
+	 */
 	protected void displayList(List<ListItem> items) {
-
+		this.listItems = items;
 		// Get ListView object from xml
 		listView = (ListView) findViewById(R.id.list);
 
 		List<String> values = new ArrayList<String>();
-		for (ListItem li : items) {
-			values.add(li.getItem().getName());
+		for (ListItem li : listItems) {
+			values.add(li.toString());
 		}
 		
 		
@@ -43,57 +54,46 @@ public class ItemListActivity extends Activity {
 
 		// Assign adapter to ListView
 		listView.setAdapter(adapter); 
-		/* 
-		// ListView Item Click Listener
-		listView.setOnClickListener(new OnClickListener() {
-
-			  public void onItemClick(AdapterView<?> parent, View view,
-				 int position, long id) {
-				
-			   // ListView Clicked item index
-			   int itemPosition	 = position;
-			   
-			   // ListView Clicked item value
-			   String  itemValue	= (String) listView.getItemAtPosition(position);
-				  
-				// Show Alert 
-				Toast.makeText(getApplicationContext(),
-				  "Position :"+itemPosition+"  ListItem : " +itemValue , Toast.LENGTH_LONG)
-				  .show();
-			 
-			  }
+		
+		//ListView Item Click Listener;
+		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
 			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				showNoticeDialog(listItems.get(arg2));
+				return false;
 			}
-
 		 }); 
-		 */
+		
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				showMoveDialog(listItems.get(arg2));
+			}
+		 }); 
+		
 	}
 
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//		// Inflate the menu; this adds items to the action bar if it is present.
-//		getMenuInflater().inflate(R.menu.inventory, menu);
-//		return true;
-//	}
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle presses on the action bar items
-		switch (item.getItemId()) {
-			case R.id.action_add_item:
-				Intent intent = new Intent(this, AddItemActivity.class);
-				intent.putExtra(AddItemActivity.ACTIVITY_CALLER, this.NAME);
-				startActivity(intent);
-				return true;
-			case R.id.action_settings:
-				
-				return true;
-			default:
-				return super.onOptionsItemSelected(item);
-		}
-	}
+    protected abstract void showMoveDialog(ListItem listItem) ;
+
+	public void showNoticeDialog(final ListItem li) {
+        // Create an instance of the dialog fragment and show it
+    	new AlertDialog.Builder(this)
+        .setTitle("Delete entry")
+        .setMessage("Are you sure you want to delete this entry?")
+        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) { 
+                deleteItem(li);
+            }
+         })
+        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) { 
+                // do nothing
+            }
+         })
+         .show();
+    }
+
+	protected abstract void deleteItem(ListItem li);
 }

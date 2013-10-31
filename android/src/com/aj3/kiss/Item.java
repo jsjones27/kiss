@@ -51,6 +51,7 @@ public class Item {
 
 	public void setUnit(Unit unit) {
 		this.unit = unit;
+
 	}
 	
 	public String getUpc() {
@@ -59,5 +60,13 @@ public class Item {
 	
 	public void setUpc(String upc) {
 		this.upc = upc;
+	}	
+	
+	public String toString() {
+		return name;
+	}
+	
+	public boolean equals(Item item) {
+		return this.getName().equals(item.getName());
 	}
 }
