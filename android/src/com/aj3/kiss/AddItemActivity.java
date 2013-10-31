@@ -143,6 +143,7 @@ public class AddItemActivity extends Activity {
 	}
 	
 	private class GetItemFromUpc extends AsyncTask <String, Void, String> {
+		// to use: new GetItemFromUpc().execute(UPC_GOES_HERE);
 		
 		@Override
 		protected String doInBackground(String... upc) {
