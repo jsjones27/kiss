@@ -132,9 +132,9 @@ public class IntentIntegrator {
   
   public static final List<String> TARGET_BARCODE_SCANNER_ONLY = Collections.singletonList(BS_PACKAGE);
   public static final List<String> TARGET_ALL_KNOWN = list(
+		  BS_PACKAGE,                  // Barcode Scanner      
           BSPLUS_PACKAGE,             // Barcode Scanner+
-          BSPLUS_PACKAGE + ".simple", // Barcode Scanner+ Simple
-          BS_PACKAGE                  // Barcode Scanner          
+          BSPLUS_PACKAGE + ".simple" // Barcode Scanner+ Simple
           // What else supports this intent?
       );
   
