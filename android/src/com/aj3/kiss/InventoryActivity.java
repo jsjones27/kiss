@@ -14,13 +14,13 @@ public class InventoryActivity extends ItemListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_inventory);
-
+/*
 		DatabaseHelper db = new DatabaseHelper(this);
 		List<ListItem> listItems = db.getInventory();
 		db.close();
 		
 		this.displayList(listItems);
-
+*/
 	}
 
 	@Override
