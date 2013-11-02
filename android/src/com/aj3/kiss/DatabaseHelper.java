@@ -179,6 +179,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return cursor.getInt(cursor.getColumnIndex(KEY_ITEM_ID));
 	}
 	
+	private Item getItem(Cursor cursor) {
+		Item item = new Item();
+		item.setId(cursor.getInt(cursor.getColumnIndex(KEY_ITEM_ID)));
+		item.setName(cursor.getString(cursor.getColumnIndex(KEY_ITEM_NAME)));
+		
+		Category category = new Category();
+		category.setId(cursor.getInt(cursor.getColumnIndex(KEY_CATEGORY_ID)));
+		category.setName(cursor.getString(cursor.getColumnIndex(KEY_CATEGORY_NAME)));
+		item.setCategory(category);
+		
+		Unit unit = new Unit();
+		unit.setId(cursor.getInt(cursor.getColumnIndex(KEY_UNIT_ID)));
+		unit.setName(cursor.getString(cursor.getColumnIndex(KEY_UNIT_NAME)));
+		item.setUnit(unit);
+		
+		item.setUpc(cursor.getString(cursor.getColumnIndex(KEY_UPC)));
+		
+		return item;
+	}
+	
+	public Item lookupUpc(String upc) {
+		String query = "SELECT * FROM " + TABLE_ITEM + " WHERE " + KEY_UPC + " = '" + upc + "'";
+		
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery(query, null);
+		
+		if (cursor == null || cursor.getCount() == 0) {
+			return null;
+		}
+		
+		cursor.moveToFirst();
+		
+		return getItem(cursor);
+	}
+	
 	public Vector<ListItem> getGrocery() {
 		return getList(TABLE_GROCERY);
 	}
@@ -200,22 +235,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		if (cursor.moveToFirst()) {
 			do {
 				ListItem listItem = new ListItem();
-				Item item = new Item();
-				item.setId(cursor.getInt(cursor.getColumnIndex(KEY_ITEM_ID)));
-				item.setName(cursor.getString(cursor.getColumnIndex(KEY_ITEM_NAME)));
-				
-				Category category = new Category();
-				category.setId(cursor.getInt(cursor.getColumnIndex(KEY_CATEGORY_ID)));
-				category.setName(cursor.getString(cursor.getColumnIndex(KEY_CATEGORY_NAME)));
-				item.setCategory(category);
-				
-				Unit unit = new Unit();
-				unit.setId(cursor.getInt(cursor.getColumnIndex(KEY_UNIT_ID)));
-				unit.setName(cursor.getString(cursor.getColumnIndex(KEY_UNIT_NAME)));
-				item.setUnit(unit);
-				
-				item.setUpc(cursor.getString(cursor.getColumnIndex(KEY_UPC)));
-				listItem.setItem(item);
+				listItem.setItem(getItem(cursor));
 				listItem.setQuantity(cursor.getDouble(cursor.getColumnIndex(KEY_QUANTITY)));
 				
 				list.add(listItem);
