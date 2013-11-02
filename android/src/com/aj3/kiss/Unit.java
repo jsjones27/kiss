@@ -4,9 +4,8 @@ public class Unit {
 	private int id;
 	private String name;
 	
-	public Unit(int id, String name) {
+	public Unit(int id) {
 		this.id = id;
-		this.name = name;
 	}
 	
 	public Unit() {}
