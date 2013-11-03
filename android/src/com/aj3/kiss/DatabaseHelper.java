@@ -149,7 +149,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	public int getUnitId(String unitName) {
 		String query = "SELECT " + KEY_UNIT_ID + " FROM " + TABLE_UNIT +
-				" WHERE " + KEY_UNIT_NAME + " = '" + unitName + "'";
+				" WHERE " + KEY_UNIT_NAME + " = '" + unitName.replace("'", "\'\'") + "'";
 		
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery(query, null);
@@ -165,8 +165,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	public int getItemId(String itemName) {
 		String query = "SELECT " + KEY_ITEM_ID + " FROM " + TABLE_ITEM +
-				" WHERE " + KEY_ITEM_NAME + " = '" + itemName + "'";
-		
+				" WHERE " + KEY_ITEM_NAME + " = '" + itemName.replace("'", "\'\'") + "'";
+
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery(query, null);
 		
@@ -199,8 +199,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return item;
 	}
 	
-	public Item lookupUpc(String upc) {
+	public Item getItemByUpc(String upc) {
 		String query = "SELECT * FROM " + TABLE_ITEM + " WHERE " + KEY_UPC + " = '" + upc + "'";
+		
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery(query, null);
+		
+		if (cursor == null || cursor.getCount() == 0) {
+			return null;
+		}
+		
+		cursor.moveToFirst();
+		
+		return getItem(cursor);
+	}
+	
+	public Item getItemByName(String itemName) {
+		String query = "SELECT * FROM " + TABLE_ITEM + " WHERE " + KEY_ITEM_NAME + " + '" + itemName.replace("'", "\'\'") + "'";
 		
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery(query, null);

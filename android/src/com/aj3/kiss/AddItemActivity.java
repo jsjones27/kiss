@@ -1,15 +1,24 @@
 package com.aj3.kiss;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.aj3.kiss.R;
 
@@ -24,6 +33,7 @@ public class AddItemActivity extends Activity {
 	private EditText mNameView;
 	private EditText mCategoryView;
 	private EditText mQuantityView;
+	private EditText mScanResult;
 //	private View mAddItemFormView;
 //	private View mAddItemStatusView;
 //	private TextView mAddItemStatusMessageView;
@@ -40,6 +50,9 @@ public class AddItemActivity extends Activity {
 		mCategoryView = (EditText) findViewById(R.id.category);
 		
 		mQuantityView = (EditText) findViewById(R.id.quantity);
+		
+		mScanResult = (EditText) findViewById(R.id.scan_result_message);
+		mScanResult.setVisibility(View.GONE);
 
 //		mAddItemFormView = findViewById(R.id.login_form);
 //		mAddItemStatusView = findViewById(R.id.login_status);
@@ -61,10 +74,51 @@ public class AddItemActivity extends Activity {
 		return true;
 	}
 	
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle presses on the action bar items
+		switch (item.getItemId()) {
+			case R.id.action_scan_item:
+				scanItem();
+				return true;
+			case R.id.action_settings:
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
+	
+	//Scans the barcode and returns the product
+	public void scanItem(){
+		try {
+			IntentIntegrator integrator = new IntentIntegrator(this);
+			integrator.initiateScan();
+		} catch (Exception e) {
+			e.printStackTrace();
+			Toast.makeText(getApplicationContext(), "ERROR:" + e, Toast.LENGTH_LONG).show();
+		}
+	
+	}		 
+
+	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+		mScanResult = (EditText) findViewById(R.id.scan_result_message);
+
+		if (scanResult != null) {
+			String barcode;
+			barcode = scanResult.getContents();
+			mScanResult.setText(barcode);
+			new GetItemFromUpc().execute(barcode);
+		}
+		else
+		{
+			mScanResult.setText("Error");
+		}
+	}
+
 	public void addItem() {
 		if(checkIfValid()) {
 			Intent intent = getIntent();
-			String callSource = intent.getStringExtra(this.ACTIVITY_CALLER);
+			String callSource = intent.getStringExtra(AddItemActivity.ACTIVITY_CALLER);
 			if(callSource.equals(InventoryActivity.NAME)){
 //				Toast.makeText(getApplicationContext(), "Adding Item to " + callSource, Toast.LENGTH_LONG).show();
 				this.addItemToInventory();
@@ -152,5 +206,50 @@ public class AddItemActivity extends Activity {
 		listItem.setQuantity(Double.valueOf(mQuantityView.getText().toString()));
 		
 		return listItem;
+	}
+	
+	private class GetItemFromUpc extends AsyncTask <String, Void, String> {
+		@Override
+		protected String doInBackground(String... upc) {
+			try {
+				DatabaseHelper db = new DatabaseHelper(getApplicationContext());
+				Item item = db.getItemByUpc(upc[0]);
+				if (item != null) {
+					return item.getName();
+				}
+				
+				URL url = new URL("http://www.searchupc.com/handlers/upcsearch.ashx?request_type=1&access_token=E3EEF9D9-77FA-4362-BA41-12723A8048B0&upc=" + upc[0]);
+				URLConnection conn = url.openConnection();
+				InputStreamReader isr = new InputStreamReader(conn.getInputStream());
+				BufferedReader rd = new BufferedReader(isr);
+				rd.readLine();
+				String itemName = rd.readLine().split(",")[0];
+				itemName.trim();
+				if(itemName.substring(itemName.length()-1, itemName.length()).equals("\"")) {
+					itemName = itemName.substring(0, itemName.length()-1);
+				}
+				if(itemName.substring(0, 1).equals("\"")) {
+					itemName = itemName.substring(1, itemName.length());
+				}
+				return itemName;
+			} catch (Exception e) {
+				e.printStackTrace();
+				return "";
+			}
+		}
+
+		@Override
+		protected void onPostExecute(String itemName) {
+			DatabaseHelper db = new DatabaseHelper(getApplicationContext());
+			
+			mNameView.setText(itemName);
+			Item item = db.getItemByName(itemName);
+			if (item != null) {
+				Category category = item.getCategory();
+				if (category != null) {
+					mCategoryView.setText(category.getName());
+				}
+			}
+		}
 	}
 }
