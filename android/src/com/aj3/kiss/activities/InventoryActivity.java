@@ -1,6 +1,4 @@
-package com.aj3.kiss;
-
-import java.util.List;
+package com.aj3.kiss.activities;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -10,30 +8,39 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.aj3.kiss.R;
+import com.aj3.kiss.R.id;
+import com.aj3.kiss.R.layout;
+import com.aj3.kiss.R.menu;
+import com.aj3.kiss.helpers.DatabaseHelper;
+import com.aj3.kiss.models.ListItem;
 
-public class GroceryActivity extends ItemListActivity {
-	public static final String NAME = "grocery";
-	
+import java.util.List;
+
+public class InventoryActivity extends ItemListActivity {
+	public static final String NAME = "inventory";
+
+//	ListView listView;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_grocery);
+		setContentView(R.layout.activity_inventory);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
 		DatabaseHelper db = new DatabaseHelper(this);
-		List<ListItem> listItems = db.getGrocery();
+		List<ListItem> listItems = db.getInventory();
 		db.close();
 		
 		this.displayList(listItems);
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.grocery, menu);
+		getMenuInflater().inflate(R.menu.inventory, menu);
 		return true;
 	}
 	
@@ -43,8 +50,8 @@ public class GroceryActivity extends ItemListActivity {
 		switch (item.getItemId()) {
 			case R.id.action_add_item:
 				Intent intent = new Intent(this, AddItemActivity.class);
-				intent.putExtra(AddItemActivity.ACTIVITY_CALLER, GroceryActivity.NAME);
-				startActivityForResult(intent, 0);
+				intent.putExtra(AddItemActivity.ACTIVITY_CALLER, InventoryActivity.NAME);
+				startActivity(intent);
 				return true;
 			case R.id.action_settings:
 				
@@ -57,7 +64,7 @@ public class GroceryActivity extends ItemListActivity {
 	@Override
 	protected void deleteItem(ListItem li) {
 		DatabaseHelper db = new DatabaseHelper(this);
-		db.deleteGroceryItem(li);
+		db.deleteInventoryItem(li);
 		db.close();
 		this.onResume();
 		
@@ -65,7 +72,7 @@ public class GroceryActivity extends ItemListActivity {
 	
 	protected void moveItem(ListItem li) {
 		DatabaseHelper db = new DatabaseHelper(this);
-		db.addInventoryItem(li);
+		db.addGroceryItem(li);
 		db.close();
 		this.onResume();
 	}
@@ -74,8 +81,8 @@ public class GroceryActivity extends ItemListActivity {
 	protected void showMoveDialog(final ListItem listItem) {
         // Create an instance of the dialog fragment and show it
     	new AlertDialog.Builder(this)
-        .setTitle("Move to Inventory")
-        .setMessage("Are you sure you want to move this item to Inventory List?")
+        .setTitle("Move to Gorcery")
+        .setMessage("Are you sure you want to move this item to Grocery List?")
         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) { 
             	moveItem(listItem);
@@ -90,5 +97,4 @@ public class GroceryActivity extends ItemListActivity {
          .show();
 		
 	}
-
 }

@@ -1,7 +1,11 @@
-package com.aj3.kiss;
+package com.aj3.kiss.activities;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.aj3.kiss.R;
+import com.aj3.kiss.R.id;
+import com.aj3.kiss.models.ListItem;
 
 import android.app.Activity;
 import android.app.AlertDialog;

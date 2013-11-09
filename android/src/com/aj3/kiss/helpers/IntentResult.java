@@ -1,4 +1,4 @@
-package com.aj3.kiss;
+package com.aj3.kiss.helpers;
 /*
  * Copyright 2009 ZXing authors
  *
