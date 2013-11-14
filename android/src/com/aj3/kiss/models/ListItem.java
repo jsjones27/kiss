@@ -27,6 +27,15 @@ public class ListItem {
 		this.quantity = quantity;
 	}
 	
+	public double updateQuantity(double quantity) {
+		double newQuantity = this.quantity += quantity;
+		if (newQuantity < 0) {
+			// Throw exception here
+		}
+		this.setQuantity(newQuantity);
+		return newQuantity;
+	}
+	
 	public String toString() {
 		return item.toString();
 	}
