@@ -198,7 +198,15 @@ public class AddItemActivity extends Activity {
 			item.setName(itemName);
 			item.setCategory(new Category(categoryId));
 			item.setUnit(new Unit(unitId));
+			item.setUpc(mScanResult.getText().toString());
 			itemId = db.addItem(item);
+		}
+		else {
+			if (!mScanResult.getText().toString().equals("")) {
+				Item item = db.getItemByName(itemName);
+				item.setUpc(mScanResult.getText().toString());
+				db.updateItem(item);
+			}
 		}
 		
 		ListItem listItem = new ListItem();
