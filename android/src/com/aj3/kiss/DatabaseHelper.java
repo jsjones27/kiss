@@ -215,7 +215,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	public Item getItemByName(String itemName) {
-		String query = "SELECT * FROM " + TABLE_ITEM + " WHERE " + KEY_ITEM_NAME + " + '" + itemName.replace("'", "\'\'") + "'";
+		String query = "SELECT * FROM " + TABLE_ITEM + " WHERE " + KEY_ITEM_NAME + " = '" + itemName.replace("'", "\'\'") + "'";
 		
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery(query, null);
