@@ -200,7 +200,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	public Item getItemByUpc(String upc) {
-		String query = "SELECT * FROM " + TABLE_ITEM + " WHERE " + KEY_UPC + " = '" + upc + "'";
+		String query = "SELECT * FROM " + TABLE_ITEM + " JOIN " + TABLE_CATEGORY + " JOIN " + TABLE_UNIT +
+				" WHERE " + KEY_UPC + " = '" + upc + "'";
 		
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery(query, null);
@@ -215,7 +216,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	public Item getItemByName(String itemName) {
-		String query = "SELECT * FROM " + TABLE_ITEM + " WHERE " + KEY_ITEM_NAME + " = '" + itemName.replace("'", "\'\'") + "'";
+		String query = "SELECT * FROM " + TABLE_ITEM + " JOIN " + TABLE_CATEGORY + " JOIN " + TABLE_UNIT +
+				" WHERE " + KEY_ITEM_NAME + " = '" + itemName.replace("'", "\'\'") + "'";
 		
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery(query, null);
