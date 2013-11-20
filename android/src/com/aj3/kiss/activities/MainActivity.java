@@ -1,4 +1,8 @@
-package com.aj3.kiss;
+package com.aj3.kiss.activities;
+
+import com.aj3.kiss.R;
+import com.aj3.kiss.R.layout;
+import com.aj3.kiss.R.menu;
 
 import android.os.Bundle;
 import android.app.Activity;

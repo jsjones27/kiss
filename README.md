@@ -1,11 +1,10 @@
 Kitchen Inventory Supply System
 ==========================
 
-Aishwarya Venkatakrishnan
+### Authors
 
-Jonathan Michaels
-
-Jonah Gruber
-
-Justin Jones
+* Aishwarya Venkatakrishnan
+* Jonathan Michaels
+* Jonah Gruber
+* Justin Jones
 

@@ -1,14 +1,14 @@
-package com.aj3.kiss;
+package com.aj3.kiss.models;
 
-public class Unit {
+public class Category {
 	private int id;
 	private String name;
 	
-	public Unit(int id) {
+	public Category(int id) {
 		this.id = id;
 	}
 	
-	public Unit() {}
+	public Category() {}
 
 	public int getId() {
 		return id;
