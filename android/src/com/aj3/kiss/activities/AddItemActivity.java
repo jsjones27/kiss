@@ -31,6 +31,7 @@ import com.aj3.kiss.helpers.IntentResult;
 import com.aj3.kiss.models.Category;
 import com.aj3.kiss.models.Item;
 import com.aj3.kiss.models.ListItem;
+import com.aj3.kiss.models.Unit;
 
 public class AddItemActivity extends Activity {
 	public final static String ACTIVITY_CALLER = "activityCaller";

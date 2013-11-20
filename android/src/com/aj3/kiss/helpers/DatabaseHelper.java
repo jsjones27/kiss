@@ -15,7 +15,7 @@ import android.content.Context;
 
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 	private static final String DATABASE_NAME = "KissDB";
 	private static final String TABLE_ITEM = "item";
 	private static final String TABLE_INVENTORY = "inventory";
