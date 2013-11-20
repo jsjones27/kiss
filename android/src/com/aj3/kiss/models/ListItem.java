@@ -32,7 +32,7 @@ public class ListItem {
 	}
 	
 	public double updateQuantity(double quantity) {
-		double newQuantity = this.quantity += quantity;
+		double newQuantity = this.getQuantity() + quantity;
 		if (newQuantity < 0) {
 			// Throw exception here
 		}
@@ -44,7 +44,7 @@ public class ListItem {
 	 * Checks if the item should be added to Grocery List
 	 */
 	public void checkQuantity() {
-		if (quantity < Item.THRESHOLD_QUANTITY) {
+		if (this.getQuantity() < Item.THRESHOLD_QUANTITY) {
 			DatabaseHelper db = new DatabaseHelper(new Activity());
 			ListItem li = new ListItem(this.getItem(), Item.INITIAL_QUANTITY);
 			db.addGroceryItem(li);
@@ -53,7 +53,7 @@ public class ListItem {
 	}
 	
 	public String toString() {
-		return item.toString();
+		return getItem().toString();
 	}
 	
 	public boolean equals(ListItem li) {
