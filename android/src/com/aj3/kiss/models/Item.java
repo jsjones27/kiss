@@ -8,20 +8,12 @@ public class Item {
 	private Unit unit;
 	private String upc;
 	
-	public Item(int id, String name, Category category) {
-		this.id = id;
-		this.name = name;
-		this.category = category;
-	}
-	
-	public Item(String name, Category category) {
-		this.id = NO_ID;
-		this.name = name;
-		this.category = category;
-	}
-	
 	public Item() {
 		this.id = NO_ID;
+	}
+	
+	public Item(int id) {
+		this.id = id;
 	}
 
 	public int getId() {

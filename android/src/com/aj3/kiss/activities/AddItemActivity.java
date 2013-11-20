@@ -31,6 +31,7 @@ import com.aj3.kiss.helpers.IntentResult;
 import com.aj3.kiss.models.Category;
 import com.aj3.kiss.models.Item;
 import com.aj3.kiss.models.ListItem;
+import com.aj3.kiss.models.Unit;
 
 public class AddItemActivity extends Activity {
 	public final static String ACTIVITY_CALLER = "activityCaller";
@@ -179,39 +180,63 @@ public class AddItemActivity extends Activity {
 		DatabaseHelper db = new DatabaseHelper(this);
 		
 		String categoryName = mCategoryView.getText().toString();
-		Category category = db.getCategoryByName(categoryName);
+		int categoryId = db.getCategoryId(categoryName);
 		
 		// adds category to the category database if it is not there already
-		if (category == null) {
-			category = new Category();
+		if (categoryId == -1) {
+			Category category = new Category();
 			category.setName(categoryName);
-			category.setId(db.addCategory(category));
+			categoryId = db.addCategory(category);
+		}
+		
+		// this needs to be replaced once the unit text field is created
+		String unitName = "okay";
+		int unitId = db.getUnitId(unitName);
+		
+		// adds unit to the unit database if it is not there already
+		if (unitId == -1) {
+			Unit unit = new Unit();
+			unit.setName(unitName);
+			unitId = db.addUnit(unit);
 		}
 		
 		String itemName = mNameView.getText().toString();
-		Item item = db.getItemByName(itemName);
+		int itemId = db.getItemId(itemName);
 		
 		// adds item to the item database if it is not there already
-		if (item == null) {
-			item = new Item();
+		if (itemId == -1) {
+			Item item = new Item();
 			item.setName(itemName);
-			item.setCategory(category);
-			item.setId(db.addItem(item));
+			item.setCategory(new Category(categoryId));
+			item.setUnit(new Unit(unitId));
+			item.setUpc(mScanResult.getText().toString());
+			itemId = db.addItem(item);
+		}
+		else {
+			if (!mScanResult.getText().toString().equals("")) {
+				Item item = db.getItemByName(itemName);
+				item.setUpc(mScanResult.getText().toString());
+				db.updateItem(item);
+			}
 		}
 		
 		ListItem listItem = new ListItem();
-		listItem.setItem(item);
+		listItem.setItem(new Item(itemId));
 		listItem.setQuantity(Double.valueOf(mQuantityView.getText().toString()));
 		
 		return listItem;
 	}
 	
 	private class GetItemFromUpc extends AsyncTask <String, Void, String> {
-		// to use: new GetItemFromUpc().execute(UPC_GOES_HERE);
-		
 		@Override
 		protected String doInBackground(String... upc) {
 			try {
+				DatabaseHelper db = new DatabaseHelper(getApplicationContext());
+				Item item = db.getItemByUpc(upc[0]);
+				if (item != null) {
+					return item.getName();
+				}
+				
 				URL url = new URL("http://www.searchupc.com/handlers/upcsearch.ashx?request_type=1&access_token=E3EEF9D9-77FA-4362-BA41-12723A8048B0&upc=" + upc[0]);
 				URLConnection conn = url.openConnection();
 				InputStreamReader isr = new InputStreamReader(conn.getInputStream());
