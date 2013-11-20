@@ -1,5 +1,7 @@
 package com.aj3.kiss.models;
 
+import com.aj3.kiss.helpers.DatabaseHelper;
+
 public class ListItem {
 	private Item item;
 	private double quantity;
@@ -34,6 +36,17 @@ public class ListItem {
 		}
 		this.setQuantity(newQuantity);
 		return newQuantity;
+	}
+	
+	/**
+	 * Checks if the item should be added to Grocery List
+	 */
+	public void checkQuantity() {
+		if (quantity < Item.THRESHOLD_QUANTITY) {
+			DatabaseHelper db = new DatabaseHelper(this);
+			ListItem li = new ListItem(this.getItem(), Item.INITIAL_QUANTITY);
+			db.addGroceryItem(li);
+		}
 	}
 	
 	public String toString() {
