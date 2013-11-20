@@ -89,7 +89,7 @@ public class InventoryActivity extends ItemListActivity {
 	protected void showMoveDialog(final ListItem listItem) {
         // Create an instance of the dialog fragment and show it
     	new AlertDialog.Builder(this)
-        .setTitle("Move to Gorcery")
+        .setTitle("Move to Grocery")
         .setMessage("Are you sure you want to move this item to Grocery List?")
         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) { 
