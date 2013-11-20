@@ -1,5 +1,6 @@
 package com.aj3.kiss.activities;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,6 +26,9 @@ public class InventoryActivity extends ItemListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_inventory);
+		
+		ActionBar actionBar = getActionBar();
+	    actionBar.setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
@@ -47,15 +51,19 @@ public class InventoryActivity extends ItemListActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle presses on the action bar items
+		Intent intent;
 		switch (item.getItemId()) {
 			case R.id.action_add_item:
-				Intent intent = new Intent(this, AddItemActivity.class);
+				intent = new Intent(this, AddItemActivity.class);
 				intent.putExtra(AddItemActivity.ACTIVITY_CALLER, InventoryActivity.NAME);
 				startActivity(intent);
 				return true;
 			case R.id.action_settings:
-				
 				return true;
+			case android.R.id.home:
+				intent = new Intent(this,MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
 			default:
 				return super.onOptionsItemSelected(item);
 		}
