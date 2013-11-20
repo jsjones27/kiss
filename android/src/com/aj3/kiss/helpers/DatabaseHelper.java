@@ -15,7 +15,7 @@ import android.content.Context;
 
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 4;
 	private static final String DATABASE_NAME = "KissDB";
 	private static final String TABLE_ITEM = "item";
 	private static final String TABLE_INVENTORY = "inventory";
@@ -39,7 +39,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		String createItemTableQuery = "CREATE TABLE IF NOT EXISTS " + TABLE_ITEM + " ( " +
 				KEY_ITEM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-				KEY_ITEM_NAME + " TEXT UNIQUE, " +
+				KEY_ITEM_NAME + " TEXT UNIQUE COLLATE NOCASE, " +
 				KEY_CATEGORY_ID + " INTEGER, " +
 				KEY_UNIT_ID + " TEXT, " +
 				KEY_UPC + " TEXT )";
@@ -51,10 +51,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				KEY_QUANTITY + " REAL )";
 		String createCategoryTableQuery = "CREATE TABLE IF NOT EXISTS " + TABLE_CATEGORY + " ( " +
 				KEY_CATEGORY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-				KEY_CATEGORY_NAME + " TEXT UNIQUE )";
+				KEY_CATEGORY_NAME + " TEXT UNIQUE COLLATE NOCASE )";
 		String createUnitTableQuery = "CREATE TABLE IF NOT EXISTS " + TABLE_UNIT + " ( " +
 				KEY_UNIT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-				KEY_UNIT_NAME + " TEXT UNIQUE )";
+				KEY_UNIT_NAME + " TEXT UNIQUE COLLATE NOCASE )";
 		db.execSQL(createItemTableQuery);
 		db.execSQL(createInventoryTableQuery);
 		db.execSQL(createGroceryTableQuery);
