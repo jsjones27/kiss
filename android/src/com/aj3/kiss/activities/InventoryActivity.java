@@ -38,6 +38,7 @@ public class InventoryActivity extends ItemListActivity {
 		List<ListItem> listItems = db.getInventory();
 		db.close();
 		
+		// Check all items in inventory to see if they should be added to grocery list.
 		for (ListItem li : listItems) {
 			li.checkQuantity();
 		}
