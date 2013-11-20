@@ -1,5 +1,7 @@
 package com.aj3.kiss.models;
 
+import android.app.Activity;
+
 import com.aj3.kiss.helpers.DatabaseHelper;
 
 public class ListItem {
@@ -43,9 +45,10 @@ public class ListItem {
 	 */
 	public void checkQuantity() {
 		if (quantity < Item.THRESHOLD_QUANTITY) {
-			DatabaseHelper db = new DatabaseHelper(this);
+			DatabaseHelper db = new DatabaseHelper(new Activity());
 			ListItem li = new ListItem(this.getItem(), Item.INITIAL_QUANTITY);
 			db.addGroceryItem(li);
+			db.close();
 		}
 	}
 	
