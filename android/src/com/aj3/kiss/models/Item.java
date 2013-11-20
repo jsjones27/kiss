@@ -2,13 +2,14 @@ package com.aj3.kiss.models;
 
 public class Item {
 	public static final int NO_ID = -1;
+	public static final double INITIAL_QUANTITY = 2;	// initial quantity of Item when added to grocery list
+	public static final double THRESHOLD_QUANTITY = 1;	// minimum quantity of Item before adding to grocery list
+	
 	private int id;
 	private String name;
 	private Category category;
 	private Unit unit;
-	private String upc;
-	public static final double INITIAL_QUANTITY = 2;	// initial quantity of Item when added to grocery list
-	public static final double THRESHOLD_QUANTITY = 1;	// minimum quantity of Item before adding to grocvery list 
+	private String upc; 
 	
 	public Item(int id, String name, Category category) {
 		this.id = id;
