@@ -64,7 +64,7 @@ public abstract class ItemListActivity extends Activity {
 
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-				showNoticeDialog(listItems.get(arg2));
+				showDeleteDialog(listItems.get(arg2));
 				return false;
 			}
 		 }); 
@@ -73,15 +73,34 @@ public abstract class ItemListActivity extends Activity {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-				showMoveDialog(listItems.get(arg2));
+				showInfoDialog(listItems.get(arg2));
 			}
 		 }); 
 		
 	}
 
+	protected void showInfoDialog(final ListItem listItem) {
+		// Create an instance of the dialog fragment and show it
+		new AlertDialog.Builder(this)
+		.setTitle(listItem.getItem().getName())
+		.setMessage("You have " + listItem.getQuantity() + " " + listItem.getItem().getUnit().getName())
+		.setPositiveButton("Move", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) { 
+				showMoveDialog(listItem);
+			}
+		})
+		.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) { 
+				// do nothing
+			}
+		})
+		.show();
+		
+	}
+	
     protected abstract void showMoveDialog(ListItem listItem) ;
 
-	public void showNoticeDialog(final ListItem li) {
+	public void showDeleteDialog(final ListItem li) {
         // Create an instance of the dialog fragment and show it
     	new AlertDialog.Builder(this)
         .setTitle("Delete entry")
