@@ -192,7 +192,7 @@ public class AddItemActivity extends Activity {
 		}
 		
 		// this needs to be replaced once the unit text field is created
-		String unitName = "okay";
+		String unitName = mUnitView.getText().toString();
 		int unitId = db.getUnitId(unitName);
 		
 		// adds unit to the unit database if it is not there already
