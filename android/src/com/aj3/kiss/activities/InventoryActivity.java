@@ -38,6 +38,10 @@ public class InventoryActivity extends ItemListActivity {
 		List<ListItem> listItems = db.getInventory();
 		db.close();
 		
+		for (ListItem li : listItems) {
+			li.checkQuantity();
+		}
+		
 		this.displayList(listItems);
 	}
 
