@@ -83,7 +83,7 @@ public abstract class ItemListActivity extends Activity {
 		// Create an instance of the dialog fragment and show it
 		new AlertDialog.Builder(this)
 		.setTitle(listItem.getItem().getName())
-		.setMessage("You have " + listItem.getQuantity() + " " + listItem.getItem().getUnit())
+		.setMessage("You have " + listItem.getQuantity() + " " + listItem.getItem().getUnit().getName())
 		.setPositiveButton("Move", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) { 
 				showMoveDialog(listItem);
