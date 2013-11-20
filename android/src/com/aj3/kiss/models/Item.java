@@ -8,7 +8,7 @@ public class Item {
 	private Unit unit;
 	private String upc;
 	public static final double INITIAL_QUANTITY = 2;	// initial quantity of Item when added to grocery list
-	public static final double THRESHOLD_QUANTITY = 1;	// minimum quantity of Item before adding to grovery list 
+	public static final double THRESHOLD_QUANTITY = 1;	// minimum quantity of Item before adding to grocvery list 
 	
 	public Item(int id, String name, Category category) {
 		this.id = id;
