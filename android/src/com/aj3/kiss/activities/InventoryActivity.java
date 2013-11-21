@@ -13,6 +13,7 @@ import com.aj3.kiss.R.id;
 import com.aj3.kiss.R.layout;
 import com.aj3.kiss.R.menu;
 import com.aj3.kiss.helpers.DatabaseHelper;
+import com.aj3.kiss.models.Item;
 import com.aj3.kiss.models.ListItem;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class InventoryActivity extends ItemListActivity {
 		setContentView(R.layout.activity_inventory);
 		
 		ActionBar actionBar = getActionBar();
-	    actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
@@ -37,6 +38,14 @@ public class InventoryActivity extends ItemListActivity {
 		DatabaseHelper db = new DatabaseHelper(this);
 		List<ListItem> listItems = db.getInventory();
 		db.close();
+		
+		// Check all items in inventory to see if they should be added to grocery list.
+		for (ListItem li : listItems) {
+			if (li.getQuantity() < Item.THRESHOLD_QUANTITY) {
+				ListItem l = new ListItem(li.getItem(), Item.INITIAL_QUANTITY);
+				db.addGroceryItem(l);
+			}
+		}
 		
 		this.displayList(listItems);
 	}
@@ -62,8 +71,8 @@ public class InventoryActivity extends ItemListActivity {
 				return true;
 			case android.R.id.home:
 				intent = new Intent(this,MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+				startActivity(intent);
 			default:
 				return super.onOptionsItemSelected(item);
 		}
@@ -87,22 +96,22 @@ public class InventoryActivity extends ItemListActivity {
 
 	@Override
 	protected void showMoveDialog(final ListItem listItem) {
-        // Create an instance of the dialog fragment and show it
-    	new AlertDialog.Builder(this)
-        .setTitle("Move to Grocery")
-        .setMessage("Are you sure you want to move this item to Grocery List?")
-        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) { 
-            	moveItem(listItem);
-            	deleteItem(listItem);
-            }
-         })
-        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) { 
-                // do nothing
-            }
-         })
-         .show();
+		// Create an instance of the dialog fragment and show it
+		new AlertDialog.Builder(this)
+		.setTitle("Move to Grocery")
+		.setMessage("Are you sure you want to move this item to Grocery List?")
+		.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) { 
+				moveItem(listItem);
+				deleteItem(listItem);
+			}
+		 })
+		.setNegativeButton("No", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) { 
+				// do nothing
+			}
+		 })
+		 .show();
 		
 	}
 }
