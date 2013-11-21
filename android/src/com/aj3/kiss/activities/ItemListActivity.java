@@ -22,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 public abstract class ItemListActivity extends Activity {
@@ -103,28 +104,33 @@ public abstract class ItemListActivity extends Activity {
 		
 	}
 	
-	protected void showEditDialog(final ListItem listItem) {
-		// custom dialog
-		final Dialog dialog = new Dialog(this);
-		dialog.setContentView(R.layout.dialog_edit_quantity);
-		dialog.setTitle("Title...");
-		 
-		// set the custom dialog components - text, image and button
-		TextView text = (TextView) dialog.findViewById(R.id.text);
-		text.setText("Android custom dialog example!");
-		ImageView image = (ImageView) dialog.findViewById(R.id.image);
-		image.setImageResource(R.drawable.ic_launcher);
-		 
-		Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
-		// if button is clicked, close the custom dialog
-		dialogButton.setOnClickListener(new OnClickListener(){
+	protected void showEditDialog(final ListItem li) {
+		final Dialog d = new Dialog(this);
+		d.setTitle("NumberPicker");
+		d.setContentView(R.layout.dialog_edit_quantity);
+		Button b1 = (Button) d.findViewById(R.id.button1);
+		Button b2 = (Button) d.findViewById(R.id.button2);
+		final NumberPicker np = (NumberPicker) d.findViewById(R.id.numberPicker1);
+		np.setMaxValue(100);
+		np.setMinValue(0);
+		np.setWrapSelectorWheel(false);
+//		np.setOnValueChangedListener(this);
+		b1.setOnClickListener(new OnClickListener()
+		{
 			@Override
 			public void onClick(View v) {
-				dialog.dismiss();
+				li.setQuantity(np.getValue());
+				d.dismiss();
 			}
 		});
-		
-		dialog.show();
+		b2.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v) {
+				d.dismiss();
+			}
+		});
+		d.show();
 	}
 	
     protected abstract void showMoveDialog(ListItem listItem) ;
