@@ -1,6 +1,8 @@
 package com.aj3.kiss.activities;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.aj3.kiss.R;
@@ -50,9 +52,17 @@ public abstract class ItemListActivity extends Activity {
 		listView = (ListView) findViewById(R.id.list);
 
 		List<String> values = new ArrayList<String>();
+		
+		Collections.sort(items, new Comparator<ListItem>() {
+		    public int compare(ListItem left, ListItem right)  {
+		        return left.getItem().getName().compareTo(right.getItem().getName()); // The order depends on the direction of sorting.
+		    }
+		});
+		
 		for (ListItem li : listItems) {
 			values.add(li.toString());
 		}
+		
 		
 		
 		// Define a new Adapter
