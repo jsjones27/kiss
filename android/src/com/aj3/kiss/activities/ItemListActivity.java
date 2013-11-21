@@ -9,10 +9,12 @@ import com.aj3.kiss.models.ListItem;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -23,6 +25,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.NumberPicker;
+import android.widget.NumberPicker.OnValueChangeListener;
 import android.widget.TextView;
 
 public abstract class ItemListActivity extends Activity {
@@ -105,33 +108,37 @@ public abstract class ItemListActivity extends Activity {
 	}
 	
 	protected void showEditDialog(final ListItem li) {
-		final Dialog d = new Dialog(this);
-		d.setTitle("NumberPicker");
-		d.setContentView(R.layout.dialog_edit_quantity);
-		Button b1 = (Button) d.findViewById(R.id.button1);
-		Button b2 = (Button) d.findViewById(R.id.button2);
-		final NumberPicker np = (NumberPicker) d.findViewById(R.id.numberPicker1);
+		final Builder d = new AlertDialog.Builder(this);
+		final View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.dialog_edit_quantity, null);
+		
+		final NumberPicker np = (NumberPicker) view.findViewById(R.id.numberPicker1);
 		np.setMaxValue(100);
 		np.setMinValue(0);
 		np.setValue((int)li.getQuantity());
-		np.setWrapSelectorWheel(false);
-//		np.setOnValueChangedListener(this);
-		b1.setOnClickListener(new OnClickListener()
+		np.setWrapSelectorWheel(true);
+		d.setTitle("NumberPicker");
+		d.setView(view);
+		d.setPositiveButton("OK", new DialogInterface.OnClickListener()
 		{
 			@Override
-			public void onClick(View v) {
+			public void onClick(DialogInterface dialog, int which) {
 				li.setQuantity(np.getValue());
-				d.dismiss();
 			}
 		});
-		b2.setOnClickListener(new OnClickListener()
+		d.setNeutralButton("Move", new DialogInterface.OnClickListener()
 		{
 			@Override
-			public void onClick(View v) {
-				d.dismiss();
+			public void onClick(DialogInterface dialog, int which) {
+				showMoveDialog(li);
 			}
 		});
-		
+		d.setNegativeButton("Cancel",new DialogInterface.OnClickListener()
+		{
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				
+			}
+		});
 		d.show();
 	}
 	
