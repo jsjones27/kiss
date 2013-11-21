@@ -9,15 +9,20 @@ import com.aj3.kiss.models.ListItem;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public abstract class ItemListActivity extends Activity {
 	public static final String NAME = "itemList";
@@ -84,9 +89,9 @@ public abstract class ItemListActivity extends Activity {
 		new AlertDialog.Builder(this)
 		.setTitle(listItem.getItem().getName())
 		.setMessage("You have " + listItem.getQuantity() + " " + listItem.getItem().getUnit().getName())
-		.setPositiveButton("Move", new DialogInterface.OnClickListener() {
+		.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) { 
-				showMoveDialog(listItem);
+				showEditDialog(listItem);
 			}
 		})
 		.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
@@ -96,6 +101,30 @@ public abstract class ItemListActivity extends Activity {
 		})
 		.show();
 		
+	}
+	
+	protected void showEditDialog(final ListItem listItem) {
+		// custom dialog
+		final Dialog dialog = new Dialog(this);
+		dialog.setContentView(R.layout.dialog_edit_quantity);
+		dialog.setTitle("Title...");
+		 
+		// set the custom dialog components - text, image and button
+		TextView text = (TextView) dialog.findViewById(R.id.text);
+		text.setText("Android custom dialog example!");
+		ImageView image = (ImageView) dialog.findViewById(R.id.image);
+		image.setImageResource(R.drawable.ic_launcher);
+		 
+		Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+		// if button is clicked, close the custom dialog
+		dialogButton.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+		
+		dialog.show();
 	}
 	
     protected abstract void showMoveDialog(ListItem listItem) ;
