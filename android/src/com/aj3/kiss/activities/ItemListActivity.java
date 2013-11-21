@@ -1,6 +1,8 @@
 package com.aj3.kiss.activities;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.aj3.kiss.R;
@@ -41,9 +43,17 @@ public abstract class ItemListActivity extends Activity {
 		listView = (ListView) findViewById(R.id.list);
 
 		List<String> values = new ArrayList<String>();
+		
+		Collections.sort(items, new Comparator<ListItem>() {
+		    public int compare(ListItem left, ListItem right)  {
+		        return left.getItem().getName().compareTo(right.getItem().getName()); // The order depends on the direction of sorting.
+		    }
+		});
+		
 		for (ListItem li : listItems) {
 			values.add(li.toString());
 		}
+		
 		
 		
 		// Define a new Adapter
@@ -64,7 +74,7 @@ public abstract class ItemListActivity extends Activity {
 
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-				showNoticeDialog(listItems.get(arg2));
+				showDeleteDialog(listItems.get(arg2));
 				return false;
 			}
 		 }); 
@@ -73,15 +83,34 @@ public abstract class ItemListActivity extends Activity {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-				showMoveDialog(listItems.get(arg2));
+				showInfoDialog(listItems.get(arg2));
 			}
 		 }); 
 		
 	}
 
+	protected void showInfoDialog(final ListItem listItem) {
+		// Create an instance of the dialog fragment and show it
+		new AlertDialog.Builder(this)
+		.setTitle(listItem.getItem().getName())
+		.setMessage("You have " + listItem.getQuantity() + " " + listItem.getItem().getUnit().getName())
+		.setPositiveButton("Move", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) { 
+				showMoveDialog(listItem);
+			}
+		})
+		.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) { 
+				// do nothing
+			}
+		})
+		.show();
+		
+	}
+	
     protected abstract void showMoveDialog(ListItem listItem) ;
 
-	public void showNoticeDialog(final ListItem li) {
+	public void showDeleteDialog(final ListItem li) {
         // Create an instance of the dialog fragment and show it
     	new AlertDialog.Builder(this)
         .setTitle("Delete entry")

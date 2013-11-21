@@ -58,7 +58,7 @@ public class Item {
 	}	
 	
 	public String toString() {
-		return name;
+		return this.getName();
 	}
 	
 	public boolean equals(Item item) {
