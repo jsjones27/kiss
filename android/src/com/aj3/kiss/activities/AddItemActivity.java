@@ -44,6 +44,7 @@ public class AddItemActivity extends Activity {
 	private EditText mNameView;
 	private EditText mCategoryView;
 	private EditText mQuantityView;
+	private EditText mUnitView;
 	private EditText mScanResult;
 //	private View mAddItemFormView;
 //	private View mAddItemStatusView;
@@ -61,7 +62,7 @@ public class AddItemActivity extends Activity {
 		mCategoryView = (EditText) findViewById(R.id.category);
 		
 		mQuantityView = (EditText) findViewById(R.id.quantity);
-		
+		mUnitView = (EditText) findViewById(R.id.unit);
 		mScanResult = (EditText) findViewById(R.id.scan_result_message);
 		mScanResult.setVisibility(View.GONE);
 
@@ -147,7 +148,8 @@ public class AddItemActivity extends Activity {
 	public boolean checkIfValid(){
 		if(mNameView.getText().toString().trim().isEmpty() || 
 				mCategoryView.getText().toString().trim().isEmpty() || 
-				mQuantityView.getText().toString().trim().isEmpty()) {
+				mQuantityView.getText().toString().trim().isEmpty() ||
+				mUnitView.getText().toString().trim().isEmpty()) {
 			new AlertDialog.Builder(this)
 	        .setTitle("Blank Fields")
 	        .setMessage("You cannot leave fields blank")
@@ -190,7 +192,7 @@ public class AddItemActivity extends Activity {
 		}
 		
 		// this needs to be replaced once the unit text field is created
-		String unitName = "okay";
+		String unitName = mUnitView.getText().toString();
 		int unitId = db.getUnitId(unitName);
 		
 		// adds unit to the unit database if it is not there already
