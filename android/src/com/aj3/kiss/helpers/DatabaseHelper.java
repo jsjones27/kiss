@@ -15,7 +15,7 @@ import android.content.Context;
 
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-	private static final int DATABASE_VERSION = 4;
+	private static final int DATABASE_VERSION = 5;
 	private static final String DATABASE_NAME = "KissDB";
 	private static final String TABLE_ITEM = "item";
 	private static final String TABLE_INVENTORY = "inventory";
@@ -44,10 +44,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				KEY_UNIT_ID + " TEXT, " +
 				KEY_UPC + " TEXT )";
 		String createInventoryTableQuery = "CREATE TABLE IF NOT EXISTS " + TABLE_INVENTORY + " ( " +
-				KEY_ITEM_ID + " INTEGER, " +
+				KEY_ITEM_ID + " INTEGER PRIMARY KEY, " +
 				KEY_QUANTITY + " REAL )";
 		String createGroceryTableQuery = "CREATE TABLE IF NOT EXISTS " + TABLE_GROCERY + " ( " +
-				KEY_ITEM_ID + " INTEGER, " +
+				KEY_ITEM_ID + " INTEGER PRIMARY KEY, " +
 				KEY_QUANTITY + " REAL )";
 		String createCategoryTableQuery = "CREATE TABLE IF NOT EXISTS " + TABLE_CATEGORY + " ( " +
 				KEY_CATEGORY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +

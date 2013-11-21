@@ -1,5 +1,9 @@
 package com.aj3.kiss.models;
 
+import android.app.Activity;
+
+import com.aj3.kiss.helpers.DatabaseHelper;
+
 public class ListItem {
 	private Item item;
 	private double quantity;
@@ -27,8 +31,17 @@ public class ListItem {
 		this.quantity = quantity;
 	}
 	
+	public double updateQuantity(double quantity) {
+		double newQuantity = this.getQuantity() + quantity;
+		if (newQuantity < 0) {
+			// Throw exception here
+		}
+		this.setQuantity(newQuantity);
+		return newQuantity;
+	}
+	
 	public String toString() {
-		return item.toString();
+		return getItem().toString();
 	}
 	
 	public boolean equals(ListItem li) {
