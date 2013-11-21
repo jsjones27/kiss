@@ -113,6 +113,7 @@ public abstract class ItemListActivity extends Activity {
 		final NumberPicker np = (NumberPicker) d.findViewById(R.id.numberPicker1);
 		np.setMaxValue(100);
 		np.setMinValue(0);
+		np.setValue((int)li.getQuantity());
 		np.setWrapSelectorWheel(false);
 //		np.setOnValueChangedListener(this);
 		b1.setOnClickListener(new OnClickListener()
@@ -130,6 +131,7 @@ public abstract class ItemListActivity extends Activity {
 				d.dismiss();
 			}
 		});
+		
 		d.show();
 	}
 	
