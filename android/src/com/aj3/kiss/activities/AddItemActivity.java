@@ -151,13 +151,13 @@ public class AddItemActivity extends Activity {
 				mQuantityView.getText().toString().trim().isEmpty() ||
 				mUnitView.getText().toString().trim().isEmpty()) {
 			new AlertDialog.Builder(this)
-	        .setTitle("Blank Fields")
-	        .setMessage("You cannot leave fields blank")
-	        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-	            public void onClick(DialogInterface dialog, int which) { 
-	            }
-	         })
-	         .show();
+			.setTitle("Blank Fields")
+			.setMessage("You cannot leave fields blank")
+			.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) { 
+				}
+			 })
+			 .show();
 //			Toast.makeText(getApplicationContext(), "False", Toast.LENGTH_LONG).show();
 			return false;
 		} else {
