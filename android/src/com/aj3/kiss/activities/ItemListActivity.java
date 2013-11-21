@@ -45,9 +45,9 @@ public abstract class ItemListActivity extends Activity {
 		List<String> values = new ArrayList<String>();
 		
 		Collections.sort(items, new Comparator<ListItem>() {
-		    public int compare(ListItem left, ListItem right)  {
-		        return left.getItem().getName().compareTo(right.getItem().getName()); // The order depends on the direction of sorting.
-		    }
+			public int compare(ListItem left, ListItem right)  {
+				return left.getItem().getName().compareTo(right.getItem().getName()); // The order depends on the direction of sorting.
+			}
 		});
 		
 		for (ListItem li : listItems) {
@@ -108,25 +108,25 @@ public abstract class ItemListActivity extends Activity {
 		
 	}
 	
-    protected abstract void showMoveDialog(ListItem listItem) ;
+	protected abstract void showMoveDialog(ListItem listItem) ;
 
 	public void showDeleteDialog(final ListItem li) {
-        // Create an instance of the dialog fragment and show it
-    	new AlertDialog.Builder(this)
-        .setTitle("Delete entry")
-        .setMessage("Are you sure you want to delete this entry?")
-        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) { 
-                deleteItem(li);
-            }
-         })
-        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) { 
-                // do nothing
-            }
-         })
-         .show();
-    }
+		// Create an instance of the dialog fragment and show it
+		new AlertDialog.Builder(this)
+		.setTitle("Delete entry")
+		.setMessage("Are you sure you want to delete this entry?")
+		.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) { 
+				deleteItem(li);
+			}
+		 })
+		.setNegativeButton("No", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) { 
+				// do nothing
+			}
+		 })
+		 .show();
+	}
 
 	protected abstract void deleteItem(ListItem li);
 }

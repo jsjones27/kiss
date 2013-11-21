@@ -26,7 +26,7 @@ public class GroceryActivity extends ItemListActivity {
 		setContentView(R.layout.activity_grocery);
 		
 		ActionBar actionBar = getActionBar();
-	    actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
@@ -60,8 +60,8 @@ public class GroceryActivity extends ItemListActivity {
 				return true;
 			case android.R.id.home:
 				intent = new Intent(this,MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+				startActivity(intent);
 			default:
 				return super.onOptionsItemSelected(item);
 		}
@@ -85,22 +85,22 @@ public class GroceryActivity extends ItemListActivity {
 
 	@Override
 	protected void showMoveDialog(final ListItem listItem) {
-        // Create an instance of the dialog fragment and show it
-    	new AlertDialog.Builder(this)
-        .setTitle("Move to Inventory")
-        .setMessage("Are you sure you want to move this item to Inventory List?")
-        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) { 
-            	moveItem(listItem);
-            	deleteItem(listItem);
-            }
-         })
-        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) { 
-                // do nothing
-            }
-         })
-         .show();
+		// Create an instance of the dialog fragment and show it
+		new AlertDialog.Builder(this)
+		.setTitle("Move to Inventory")
+		.setMessage("Are you sure you want to move this item to Inventory List?")
+		.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) { 
+				moveItem(listItem);
+				deleteItem(listItem);
+			}
+		})
+		.setNegativeButton("No", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) { 
+				// do nothing
+			}
+		})
+		.show();
 		
 	}
 
