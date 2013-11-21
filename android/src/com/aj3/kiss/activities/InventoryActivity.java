@@ -13,6 +13,7 @@ import com.aj3.kiss.R.id;
 import com.aj3.kiss.R.layout;
 import com.aj3.kiss.R.menu;
 import com.aj3.kiss.helpers.DatabaseHelper;
+import com.aj3.kiss.models.Item;
 import com.aj3.kiss.models.ListItem;
 
 import java.util.List;
@@ -40,7 +41,10 @@ public class InventoryActivity extends ItemListActivity {
 		
 		// Check all items in inventory to see if they should be added to grocery list.
 		for (ListItem li : listItems) {
-			li.checkQuantity();
+			if (li.getQuantity() < Item.THRESHOLD_QUANTITY) {
+				ListItem l = new ListItem(li.getItem(), Item.INITIAL_QUANTITY);
+				db.addGroceryItem(l);
+			}
 		}
 		
 		this.displayList(listItems);

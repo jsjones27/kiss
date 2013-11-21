@@ -40,18 +40,6 @@ public class ListItem {
 		return newQuantity;
 	}
 	
-	/**
-	 * Checks if the item should be added to Grocery List
-	 */
-	public void checkQuantity() {
-		if (this.getQuantity() < Item.THRESHOLD_QUANTITY) {
-			DatabaseHelper db = new DatabaseHelper(new Activity());
-			ListItem li = new ListItem(this.getItem(), Item.INITIAL_QUANTITY);
-			db.addGroceryItem(li);
-			db.close();
-		}
-	}
-	
 	public String toString() {
 		return getItem().toString();
 	}
