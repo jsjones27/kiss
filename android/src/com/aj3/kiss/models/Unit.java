@@ -1,5 +1,10 @@
 package com.aj3.kiss.models;
 
+/*
+ * Represents a single Unit.
+ * 
+ * A unit is used to label the quantity of an Item.
+ */
 public class Unit {
 	private int id;
 	private String name;

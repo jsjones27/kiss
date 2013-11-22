@@ -4,6 +4,11 @@ import android.app.Activity;
 
 import com.aj3.kiss.helpers.DatabaseHelper;
 
+/*
+ * Represents an entry in some list.
+ * 
+ * An Item has some quantity associated with it: together these form the ListItem.
+ */
 public class ListItem {
 	private Item item;
 	private double quantity;

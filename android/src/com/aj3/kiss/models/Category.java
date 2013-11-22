@@ -1,5 +1,10 @@
 package com.aj3.kiss.models;
 
+/*
+ * Represents a single category.
+ * 
+ * Items can be classified into categories.
+ */
 public class Category {
 	private int id;
 	private String name;
