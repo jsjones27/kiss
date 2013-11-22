@@ -9,12 +9,14 @@ import com.aj3.kiss.R;
 import com.aj3.kiss.R.id;
 import com.aj3.kiss.models.ListItem;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -118,16 +120,22 @@ public abstract class ItemListActivity extends Activity {
 	}
 	
 
+	@SuppressLint({ "ResourceAsColor", "CutPasteId" })
 	protected void showEditDialog(final ListItem li) {
 		final Builder d = new AlertDialog.Builder(this);
 		final View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.dialog_edit_quantity, null);
 		
 		final NumberPicker np = (NumberPicker) view.findViewById(R.id.numberPicker1);
-		np.setMaxValue(100);
+		
+		String[] nums = new String[101];
+	    for(int i=0; i<nums.length; i++)
+	           nums[i] = Integer.toString(i);
+	    np.setDisplayedValues(nums );
+		np.setMaxValue(101);
 		np.setMinValue(0);
 		np.setValue((int)li.getQuantity());
 		np.setWrapSelectorWheel(true);
-		d.setTitle("NumberPicker");
+		d.setTitle("Quantity");
 		d.setView(view);
 		d.setPositiveButton("OK", new DialogInterface.OnClickListener()
 		{
