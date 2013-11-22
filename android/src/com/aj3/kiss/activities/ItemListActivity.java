@@ -72,6 +72,9 @@ public abstract class ItemListActivity extends Activity {
 		//ListView Item Click Listener;
 		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
+			/**
+			 * On long press give the option to delete the item
+			 */
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				showDeleteDialog(listItems.get(arg2));
@@ -80,7 +83,9 @@ public abstract class ItemListActivity extends Activity {
 		 }); 
 		
 		listView.setOnItemClickListener(new OnItemClickListener() {
-
+			/**
+			 * On short press show more information about the item
+			 */
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				showInfoDialog(listItems.get(arg2));
@@ -89,6 +94,10 @@ public abstract class ItemListActivity extends Activity {
 		
 	}
 
+	/**
+	 * Show and Android dialog with more information about the selected item
+	 * @param listItem
+	 */
 	protected void showInfoDialog(final ListItem listItem) {
 		// Create an instance of the dialog fragment and show it
 		new AlertDialog.Builder(this)
@@ -107,9 +116,16 @@ public abstract class ItemListActivity extends Activity {
 		.show();
 		
 	}
-	
+	/**
+	 * Show the dialog to confirm that the item is to be moved to the other list
+	 * @param listItem
+	 */
 	protected abstract void showMoveDialog(ListItem listItem) ;
 
+	/**
+	 * Show a dialog confirming that the user wants to delete this ListItem
+	 * @param li
+	 */
 	public void showDeleteDialog(final ListItem li) {
 		// Create an instance of the dialog fragment and show it
 		new AlertDialog.Builder(this)
@@ -128,5 +144,9 @@ public abstract class ItemListActivity extends Activity {
 		 .show();
 	}
 
+	/**
+	 * Remove the item from the list
+	 * @param li
+	 */
 	protected abstract void deleteItem(ListItem li);
 }

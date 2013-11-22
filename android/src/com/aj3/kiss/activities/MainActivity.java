@@ -25,11 +25,19 @@ public class MainActivity extends Activity {
 		return true;
 	}
 	
+	/**
+	 * Goes to the inventory activity
+	 * @param view
+	 */
 	public void jumpToInventory(View view){
 		Intent intent = new Intent(this, InventoryActivity.class);
 		startActivity(intent);
 	}
 	
+	/**
+	 * Goes to the gorcery activity
+	 * @param view
+	 */
 	public void jumpToGrocery(View view){
 		Intent intent = new Intent(this, GroceryActivity.class);
 		startActivity(intent);
