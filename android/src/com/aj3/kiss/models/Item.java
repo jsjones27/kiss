@@ -1,5 +1,11 @@
 package com.aj3.kiss.models;
 
+/*
+ * Represents a single Item.
+ * 
+ * An item is a type of product. It belongs to a certain category and is measured by a certain unit.
+ * It can have an associated UPC code.
+ */
 public class Item {
 	public static final int NO_ID = -1;
 	public static final double INITIAL_QUANTITY = 2;	// initial quantity of Item when added to grocery list
@@ -30,12 +36,15 @@ public class Item {
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 	public Category getCategory() {
 		return category;
 	}
+	
 	public void setCategory(Category category) {
 		this.category = category;
 	}
@@ -46,7 +55,6 @@ public class Item {
 
 	public void setUnit(Unit unit) {
 		this.unit = unit;
-
 	}
 	
 	public String getUpc() {

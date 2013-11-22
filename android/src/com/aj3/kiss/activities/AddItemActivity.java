@@ -46,16 +46,14 @@ public class AddItemActivity extends Activity {
 	private EditText mQuantityView;
 	private EditText mUnitView;
 	private EditText mScanResult;
-//	private View mAddItemFormView;
-//	private View mAddItemStatusView;
-//	private TextView mAddItemStatusMessageView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_add_item);
-
+		
+		//Get the views for all the inputs
 		mNameView = (EditText) findViewById(R.id.name);
 		mNameView.setText(mName);
 
@@ -65,11 +63,7 @@ public class AddItemActivity extends Activity {
 		mUnitView = (EditText) findViewById(R.id.unit);
 		mScanResult = (EditText) findViewById(R.id.scan_result_message);
 		mScanResult.setVisibility(View.GONE);
-
-//		mAddItemFormView = findViewById(R.id.login_form);
-//		mAddItemStatusView = findViewById(R.id.login_status);
-//		mAddItemStatusMessageView = (TextView) findViewById(R.id.login_status_message);
-
+		
 		findViewById(R.id.comfirm_button).setOnClickListener(
 				new View.OnClickListener() {
 					@Override
@@ -99,7 +93,9 @@ public class AddItemActivity extends Activity {
 		}
 	}
 	
-	//Scans the barcode and returns the product
+	/**
+	 * Scans the barcode and gets the product
+	 */
 	public void scanItem(){
 		try {
 			IntentIntegrator integrator = new IntentIntegrator(this);
@@ -111,6 +107,9 @@ public class AddItemActivity extends Activity {
 	
 	}		 
 
+	/**
+	 * Displays the barcode in the barcode field
+	 */
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 		mScanResult = (EditText) findViewById(R.id.scan_result_message);
@@ -127,15 +126,16 @@ public class AddItemActivity extends Activity {
 		}
 	}
 
+	/**
+	 * Creates an Item from the input and adds it to a list
+	 */
 	public void addItem() {
 		if(checkIfValid()) {
 			Intent intent = getIntent();
 			String callSource = intent.getStringExtra(AddItemActivity.ACTIVITY_CALLER);
 			if(callSource.equals(InventoryActivity.NAME)){
-//				Toast.makeText(getApplicationContext(), "Adding Item to " + callSource, Toast.LENGTH_LONG).show();
 				this.addItemToInventory();
 			}else if(callSource.equals(GroceryActivity.NAME)) {
-//				Toast.makeText(getApplicationContext(), "Adding Item to " + callSource, Toast.LENGTH_LONG).show();
 				this.addItemToGrocery();
 			}
 			this.finish();
@@ -145,6 +145,10 @@ public class AddItemActivity extends Activity {
 		
 	}
 	
+	/**
+	 * Checks to make sure all needed fields are filled in
+	 * @return True is needed fields are not blank
+	 */
 	public boolean checkIfValid(){
 		if(mNameView.getText().toString().trim().isEmpty() || 
 				mCategoryView.getText().toString().trim().isEmpty() || 
@@ -158,7 +162,6 @@ public class AddItemActivity extends Activity {
 				}
 			 })
 			 .show();
-//			Toast.makeText(getApplicationContext(), "False", Toast.LENGTH_LONG).show();
 			return false;
 		} else {
 //			Toast.makeText(getApplicationContext(), "True" + mNameView.toString(), Toast.LENGTH_LONG).show();
@@ -166,18 +169,28 @@ public class AddItemActivity extends Activity {
 		}
 	}
 
+	/**
+	 * Adds an item to the inventory list
+	 */
 	public void addItemToInventory() {
 		DatabaseHelper db = new DatabaseHelper(this);
 		db.addInventoryItem(getItemToAdd());
 		db.close();
 	}
 	
+	/**
+	 * Adds and item to the grocery list
+	 */
 	public void addItemToGrocery() {
 		DatabaseHelper db = new DatabaseHelper(this);
 		db.addGroceryItem(getItemToAdd());
 		db.close();
 	}
 	
+	/**
+	 * Creates an item from the input fields
+	 * @return
+	 */
 	private ListItem getItemToAdd() {
 		DatabaseHelper db = new DatabaseHelper(this);
 		

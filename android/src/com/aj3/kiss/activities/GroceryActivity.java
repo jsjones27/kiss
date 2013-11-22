@@ -76,6 +76,10 @@ public class GroceryActivity extends ItemListActivity {
 		
 	}
 	
+	/**
+	 * Moves a list item to the inventory list
+	 * @param li
+	 */
 	protected void moveItem(ListItem li) {
 		DatabaseHelper db = new DatabaseHelper(this);
 		db.addInventoryItem(li);
